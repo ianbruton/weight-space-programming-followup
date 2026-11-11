@@ -10,6 +10,7 @@
   --ctrl: #3a8f6b;
   --mark: #fff2c4;
   color-scheme: light dark;
+  --col: min(50rem, 100% - 2rem); /* one column: nav, text, tables, figures and footer share both edges */
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -36,25 +37,22 @@ body {
 }
 header.site, footer.site {
   border-bottom: 1px solid var(--rule);
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 0;
 }
 footer.site { border-top: 1px solid var(--rule); border-bottom: 0; color: var(--muted); font-size: 0.9rem; }
-header.site nav, footer.site div { max-width: 60rem; margin: 0 auto; }
+header.site nav, footer.site div { max-width: var(--col); margin: 0 auto; }
 header.site nav a { margin-right: 1.1rem; white-space: nowrap; }
 header.site nav a[aria-current] { font-weight: 600; color: var(--fg); text-decoration: none; }
-main { max-width: 60rem; margin: 0 auto; padding: 1rem 1rem 3rem; }
-main > p, main > ul, main > ol, main > h2, main > h3, main > blockquote, section > p, section > ul, section > ol {
-  max-width: 44rem;
-}
+main { max-width: var(--col); margin: 0 auto; padding: 1rem 0 3rem; }
 h1 { font-size: 1.9rem; line-height: 1.25; margin: 1.2rem 0 0.4rem; }
 h2 { font-size: 1.35rem; margin: 2.2rem 0 0.5rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.2rem; }
 h3 { font-size: 1.08rem; margin: 1.6rem 0 0.4rem; }
-.lede { font-size: 1.12rem; color: var(--muted); max-width: 44rem; }
+.lede { font-size: 1.12rem; color: var(--muted); }
 a { color: var(--link); }
 code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.88em;
        background: var(--card); padding: 0.05em 0.3em; border-radius: 3px; }
 .box { background: var(--card); border-left: 4px solid var(--edit); padding: 0.7rem 1rem; margin: 1.2rem 0;
-       max-width: 44rem; }
+       }
 .box.neutral { border-left-color: var(--base); }
 .box p { margin: 0.3rem 0; }
 .box ul { margin: 0.3rem 0; padding-left: 1.2rem; }
@@ -66,8 +64,8 @@ td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space:
 tr.hl td { background: var(--mark); }
 .src { font-size: 0.85rem; color: var(--muted); margin: 0.2rem 0 1.2rem; }
 figure { margin: 1.2rem 0; }
-figure svg { width: 100%; max-width: 44rem; height: auto; display: block; }
-figcaption { font-size: 0.88rem; color: var(--muted); max-width: 44rem; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 0.88rem; color: var(--muted); }
 svg text { fill: var(--fg); font-family: inherit; }
 svg .axis { stroke: var(--rule); }
 svg .muted { fill: var(--muted); }
@@ -92,3 +90,7 @@ svg .base-o { fill: none; stroke: var(--base); stroke-width: 2; }
   th, td { padding: 0.3rem 0.4rem; }
   td:first-child, th:first-child { min-width: 8.5rem; }
 }
+/* Tables of six or more columns: a smaller size and tighter cells so they fit the column on a desktop */
+table:has(tr > :nth-child(6)) { font-size: 0.82rem; }
+table:has(tr > :nth-child(6)) th, table:has(tr > :nth-child(6)) td { padding: 0.35rem 0.4rem; }
+td.n.wrap { white-space: normal; }
