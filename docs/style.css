@@ -90,4 +90,5 @@ svg .base-o { fill: none; stroke: var(--base); stroke-width: 2; }
   figure svg { min-width: 32rem; }
   h1 { font-size: 1.5rem; }
   th, td { padding: 0.3rem 0.4rem; }
+  td:first-child, th:first-child { min-width: 8.5rem; }
 }

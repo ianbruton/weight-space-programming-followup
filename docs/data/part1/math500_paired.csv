@@ -1,4 +1,4 @@
-setting,problems,edited_minus_base_points,se_points
-C3,500,-3.25,1.18
-C2,100,18.0,5.0
-C1,100,46.0,5.01
+setting,problems,samples_per_problem,edited_minus_base_points,se_points,ci95_low,ci95_high,problems_only_base_better,problems_only_edited_better,mcnemar_exact_p,first100_points,first100_se,next100_points,next100_se
+C3,500,4,-3.25,1.18,-5.57,-0.93,157,115,,,,,
+C2,200,1,25.5,3.68,18.28,32.72,8,59,1.02e-10,21.0,4.98,30.0,5.41
+C1,200,1,40.5,3.48,33.68,47.32,0,81,8.27e-25,47.0,5.02,34.0,4.76

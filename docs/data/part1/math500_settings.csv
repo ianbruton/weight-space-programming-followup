@@ -1,7 +1,7 @@
-setting,model,problems,samples_per_problem,generations,accuracy_pct,se_pct,at_token_cap_pct,mean_tokens,median_tokens,loop_at_end_of_capped_pct,finished_without_answer_pct,generation_seconds_rtx3090,tokens_generated
-C3,base,500,4.0,2000,44.6,1.68,0.35,9014,8718,14.3,1.05,4147,18028550
-C3,edited,500,4.0,2000,41.35,1.66,0.05,8407,8470,0.0,1.7,3832,16814745
-C2,base,100,1.0,100,18.0,3.86,83.0,73180,81920,95.2,0.0,6376,7317974
-C2,edited,100,1.0,100,36.0,4.82,28.0,51087,51297,14.3,16.0,3335,5108747
-C1,base,100,1.0,100,2.0,1.41,98.0,32217,32768,98.0,0.0,1410,3221727
-C1,edited,100,1.0,100,48.0,5.02,34.0,23241,25711,29.4,4.0,851,2324135
+setting,model,problems,samples_per_problem,generations,accuracy_pct,se_pct,accuracy_with_plain_answer_lines_pct,at_token_cap_pct,mean_tokens,median_tokens,loop_at_end_of_capped_pct,finished_without_answer_pct,generation_seconds_rtx3090,tokens_generated
+C3,base,500,4.0,2000,44.6,1.68,44.6,0.35,9014,8718,14.3,1.05,4147,18028550
+C3,edited,500,4.0,2000,41.35,1.66,41.65,0.05,8407,8470,0.0,1.7,3832,16814745
+C2,base,200,1.0,200,19.0,2.78,19.0,80.5,71118,81920,94.4,0.5,11941,14223592
+C2,edited,200,1.0,200,44.5,3.52,46.0,24.5,49847,51336,24.5,12.5,6557,9969411
+C1,base,200,1.0,200,7.5,1.87,7.5,93.0,30837,32768,96.2,0.0,2546,6167338
+C1,edited,200,1.0,200,48.0,3.54,49.0,33.5,22345,23861,31.3,4.0,1665,4469087

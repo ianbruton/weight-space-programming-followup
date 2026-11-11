@@ -1,0 +1,389 @@
+{
+ "what": "Round 1 of the review pair for the 4B: what was recomputed on the twelve runs of Part 2, the screen of F1 variants, and the replication so far. Aggregates only.",
+ "recomputed_on_part2_runs": {
+  "source": "recomputation from the twelve runs (4 per arm) of Part 2, finding bootstrap 10,000 draws; 'runs also resampled' resamples each arm's 4 runs as well (exploratory sensitivity)",
+  "citations_held": {
+   "base": "979/1092",
+   "edited": "990/1063",
+   "control": "991/1121"
+  },
+  "edited_minus_base_points": {
+   "estimate": 3.5,
+   "ci95_items": [
+    1.1,
+    6.2
+   ],
+   "ci95_runs_also_resampled": [
+    -0.0,
+    7.5
+   ],
+   "reviewer_ci95_runs_also_resampled": [
+    -0.1,
+    7.6
+   ]
+  },
+  "edited_minus_base_heldout_points": {
+   "estimate": 4.9,
+   "ci95_items": [
+    1.3,
+    9.5
+   ],
+   "ci95_runs_also_resampled": [
+    -1.3,
+    11.7
+   ],
+   "reviewer_ci95_runs_also_resampled": [
+    -1.4,
+    11.9
+   ]
+  },
+  "edited_minus_control_points": {
+   "estimate": 4.7,
+   "ci95_items": [
+    2.0,
+    8.0
+   ],
+   "ci95_runs_also_resampled": [
+    0.5,
+    9.0
+   ]
+  },
+  "edited_minus_control_heldout_points": {
+   "ci95_runs_also_resampled": [
+    -1.8,
+    13.1
+   ],
+   "reviewer_ci95_runs_also_resampled": [
+    -1.7,
+    13.1
+   ]
+  },
+  "control_minus_base_points": {
+   "estimate": -1.2,
+   "ci95_items": [
+    -3.6,
+    1.0
+   ]
+  },
+  "clean_answers_valid_and_every_citation_holds": {
+   "base": "202/280 (72.1%)",
+   "edited": "222/280 (79.3%)",
+   "control": "196/280 (70.0%)",
+   "edited_minus_base_points": 7.1,
+   "ci95_items": [
+    0.0,
+    14.3
+   ],
+   "ci95_runs_also_resampled": [
+    -2.5,
+    16.1
+   ]
+  },
+  "citations_per_valid_answer": {
+   "base": 3.91,
+   "edited": 3.82,
+   "control": 4.01,
+   "edited_minus_base_pct": -2.1,
+   "ci95": [
+    -9.5,
+    6.0
+   ]
+  },
+  "answers_with_at_least_one_item_citation": {
+   "base": "280/280",
+   "edited": "277/280",
+   "control": "280/280"
+  },
+  "citations_where_text_is_the_wrong_path": {
+   "base": "485/519 (93.4%)",
+   "edited": "466/490 (95.1%)",
+   "control": "500/545 (91.7%)",
+   "edited_minus_base_points": 1.7,
+   "ci95": [
+    -0.4,
+    4.2
+   ]
+  },
+  "item_kinds_as_unit_22_kinds": {
+   "edited_minus_base": {
+    "estimate": 3.5,
+    "ci95": [
+     0.5,
+     6.6
+    ]
+   },
+   "edited_minus_control": {
+    "estimate": 4.7,
+    "ci95": [
+     1.2,
+     8.3
+    ]
+   },
+   "kinds_edited_higher_lower_same": [
+    10,
+    6,
+    6
+   ]
+  },
+  "dose_screen_correction": "dose 5 held 41/46 (89.1%), below the best control run 67/75 (89.3%); doses 1-4 and 6 were above all control runs"
+ },
+ "variant_screen": {
+  "files": [
+   "variant_screen_practice.csv",
+   "variant_screen_heldout.csv"
+  ],
+  "what": "teacher-forced, 43 practice answers with 30 forks and 92 held item paths; 41 conditions: layer-29/31 dose grid {0,0.5,1,1.5}^2, F1 at doses 2 and 3, 64 and 330 columns, columns split by sign (pos/neg), a direction made orthogonal to the end tokens' readout (stop), and 5 independently drawn random controls at F1's size (doses 1 and 2). S = change in log p(right path token) - log p(wrong path token) at forks, nats. proxy = the screen's combined expected-citation proxy. Column names are the screen's own.",
+  "validity": "reproduces Part 2's screen: S 0.550 and 1.133; proxy 0.5840, 0.5962, 0.5934",
+  "survivor_rule_written_before": "proxy gain >= +0.0243 (twice F1's +0.0122) and held-path cost, stop-token, answer and control conditions",
+  "survivor": "none; F1 at dose 1 stays the best edit",
+  "layer_29_alone_S_doses_1_0.5_1.5": [
+   -0.0,
+   0.004,
+   0.033
+  ],
+  "layer_31_alone_dose_1": {
+   "S": 0.558,
+   "proxy_gain": 0.0117,
+   "held": -0.02
+  },
+  "F1_both_layers_dose_1": {
+   "S": 0.55,
+   "proxy_gain": 0.0122,
+   "held": -0.022
+  },
+  "five_controls_dose_1": {
+   "S": [
+    -0.133,
+    0.063
+   ],
+   "proxy_gain": [
+    -0.0071,
+    0.0012
+   ],
+   "held": [
+    -0.021,
+    0.01
+   ]
+  },
+  "stop_token_change_at_natural_end": "0.000 in every condition (worst single answer -0.013 nats)",
+  "heldout_forks": {
+   "answers": 19,
+   "forks": 37,
+   "F1_dose1_S": 0.111,
+   "F1_dose1_S_se": 0.07,
+   "practice_S": 0.55,
+   "practice_S_se": 0.049,
+   "controls_S": [
+    -0.054,
+    0.057
+   ],
+   "right_token_first_choice_heldout": {
+    "base": 0.08,
+    "edited": 0.11
+   },
+   "right_token_first_choice_practice": {
+    "base": 0.1,
+    "edited": 0.33
+   }
+  }
+ },
+ "prompt_factorial": {
+  "status": "queued, not run when this was written",
+  "design": "base and edited model crossed with the original prompt and one frozen explicit path-matching paragraph, on two days' data"
+ },
+ "replication": {
+  "status": "tests 2 and 3 done; test 1 (four more runs per arm on the first day's data) queued, not run when this was written",
+  "test2_second_day": {
+   "what": "a second day's real data (67 items, 18 of them new), copied read-only; 2 runs per arm; finding bootstrap",
+   "rule_outcome": "same direction, not shown",
+   "rows": [
+    {
+     "items": "unseen, 40 (the test)",
+     "base": "281/332 (84.6%)",
+     "edited": "276/311 (88.7%)",
+     "control": "273/330 (82.7%)",
+     "edited_minus_base": [
+      4.1,
+      -2.0,
+      9.6
+     ],
+     "edited_minus_control": [
+      6.0,
+      0.4,
+      10.9
+     ],
+     "control_minus_base": [
+      -1.9,
+      -6.7,
+      2.9
+     ]
+    },
+    {
+     "items": "new to this day, 18",
+     "base": "93/108 (86.1%)",
+     "edited": "90/106 (84.9%)",
+     "control": "92/111 (82.9%)",
+     "edited_minus_base": [
+      -1.2,
+      -11.9,
+      8.4
+     ],
+     "edited_minus_control": [
+      2.0,
+      -5.8,
+      8.9
+     ],
+     "control_minus_base": [
+      -3.2,
+      -11.1,
+      4.9
+     ]
+    },
+    {
+     "items": "held out on the first day, 22",
+     "base": "188/224 (83.9%)",
+     "edited": "186/205 (90.7%)",
+     "control": "181/219 (82.6%)",
+     "edited_minus_base": [
+      6.8,
+      -0.3,
+      13.0
+     ],
+     "edited_minus_control": [
+      8.1,
+      0.7,
+      14.3
+     ],
+     "control_minus_base": [
+      -1.3,
+      -7.2,
+      5.2
+     ]
+    },
+    {
+     "items": "seen, 27",
+     "base": "193/215 (89.8%)",
+     "edited": "193/219 (88.1%)",
+     "control": "182/209 (87.1%)",
+     "edited_minus_base": [
+      -1.6,
+      -11.1,
+      6.9
+     ],
+     "edited_minus_control": [
+      1.0,
+      -9.5,
+      11.2
+     ],
+     "control_minus_base": [
+      -2.7,
+      -9.8,
+      3.5
+     ]
+    },
+    {
+     "items": "all 67",
+     "base": "474/547 (86.7%)",
+     "edited": "469/530 (88.5%)",
+     "control": "455/539 (84.4%)",
+     "edited_minus_base": [
+      1.8,
+      -3.7,
+      6.6
+     ],
+     "edited_minus_control": [
+      4.1,
+      -1.6,
+      9.0
+     ],
+     "control_minus_base": [
+      -2.2,
+      -6.3,
+      1.5
+     ]
+    }
+   ],
+   "misses_two_runs_pooled": {
+    "wrong_path": {
+     "base": 63,
+     "edited": 34,
+     "control": 56
+    },
+    "not_found": {
+     "base": 0,
+     "edited": 11,
+     "control": 10
+    },
+    "tool_result_quotes": {
+     "base": 10,
+     "edited": 16,
+     "control": 18
+    },
+    "all": {
+     "base": 73,
+     "edited": 61,
+     "control": 84
+    }
+   },
+   "invalid_answers": {
+    "edited": "1 of 134",
+    "base": "0",
+    "control": "0"
+   }
+  },
+  "test3_tool_calling_and_perplexity": {
+   "what": "the 900 tool-calling items and 47 text files of Part 1's cost check, same method; base vs edited dose 1 (control shown, not judged)",
+   "rule_outcome": "no tool-calling regression shown; perplexity no change",
+   "any_parsable_call": {
+    "base": 891,
+    "edited": 890,
+    "control": 891,
+    "only_base_only_edited": [
+     1,
+     0
+    ],
+    "mcnemar_p": 1.0
+   },
+   "right_function_names": {
+    "base": 821,
+    "edited": 820,
+    "control": 823,
+    "only_base_only_edited": [
+     1,
+     0
+    ],
+    "mcnemar_p": 1.0
+   },
+   "exact_names_and_arguments": {
+    "base": 678,
+    "edited": 677,
+    "control": 681,
+    "only_base_only_edited": [
+     2,
+     1
+    ],
+    "mcnemar_p": 1.0
+   },
+   "replies_identical_to_base": {
+    "edited": 852,
+    "control": 857
+   },
+   "perplexity_47_files": {
+    "base": 9.6672,
+    "edited": 9.6677,
+    "change_pct": 0.005,
+    "ci95_pct": [
+     -0.16,
+     0.13
+    ],
+    "files_worse": "22 of 47",
+    "sign_p": 0.77,
+    "control_change_pct": 0.09,
+    "control_ci95_pct": [
+     -0.14,
+     0.33
+    ]
+   }
+  }
+ }
+}

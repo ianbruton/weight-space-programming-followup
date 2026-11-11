@@ -298,6 +298,17 @@
    "base": 92.8,
    "edited": 81.1
   },
-  "source_note": "transcribed from our study report (private run folders); aggregates only"
+  "source_note": "transcribed from our study report (private run folders); aggregates only",
+  "tool_calls_ran_refused": {
+   "base": [
+    135,
+    140
+   ],
+   "edited": [
+    4,
+    33
+   ]
+  },
+  "note_after_review": "One run per model. The base run replayed an earlier run exactly under the same seed: that shows the harness is deterministic, not how much runs differ across seeds."
  }
 }

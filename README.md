@@ -33,7 +33,7 @@ Everything in Part 1 uses public files. Our runs used vLLM 0.31.0 in bf16 on one
 ```sh
 # 1. Environment (uv)
 uv venv .venv && . .venv/bin/activate
-uv pip install "vllm==0.31.0" safetensors sympy numpy huggingface_hub
+uv pip install "vllm==0.31.0" safetensors "sympy==1.14.0" numpy huggingface_hub
 
 # 2. Inputs, pinned to the revisions we and the independent audit used
 hf download Qwen/Qwen3.5-0.8B --revision 2fc06364715b967f1860aea9cf38778875588b17 --local-dir models/base
@@ -52,22 +52,26 @@ python -I code/part1_bytes/u_exact.py $B $E out/bytes
 # 4. Re-grade the released texts (CPU)
 python -I code/part1_math500/regrade.py models/edited/eval logs/exp8_math models/base out/regrade_result.json
 
-# 5. Generate (GPU). C3: 4 samples on all 500; C2 and C1: 1 sample on the same 100 problems
+# 5. Generate (GPU). C3: 4 samples on all 500; C2 and C1: 1 sample on the same 200 problems
 G="python -I code/part1_math500/gen_job.py --items math500/test.jsonl"
 $G --model models/base   --setting C3 --n 4 --chunk 250 --out out/base_C3
 $G --model models/edited --setting C3 --n 4 --chunk 250 --out out/edited_C3
-$G --model models/base   --setting C2 --n 1 --chunk 50 --ids data/part1/order100.txt --out out/base_C2x1
-$G --model models/edited --setting C2 --n 1 --chunk 50 --ids data/part1/order100.txt --out out/edited_C2x1
-$G --model models/base   --setting C1 --n 1 --chunk 50 --ids data/part1/order100.txt --out out/base_C1x1
-$G --model models/edited --setting C1 --n 1 --chunk 50 --ids data/part1/order100.txt --out out/edited_C1x1
+$G --model models/base   --setting C2 --n 1 --chunk 50 --ids data/part1/order200.txt --out out/base_C2x1
+$G --model models/edited --setting C2 --n 1 --chunk 50 --ids data/part1/order200.txt --out out/edited_C2x1
+$G --model models/base   --setting C1 --n 1 --chunk 50 --ids data/part1/order200.txt --out out/base_C1x1
+$G --model models/edited --setting C1 --n 1 --chunk 50 --ids data/part1/order200.txt --out out/edited_C1x1
 
-# 6. Score (CPU): accuracy, cap share, paired differences
-MATH500=math500/test.jsonl python -I code/part1_math500/score.py out/base_C3 out/edited_C3 \
-  out/base_C2x1 out/edited_C2x1 out/base_C1x1 out/edited_C1x1 --json out/scores.json
+# 6. Score (CPU) with the pinned scorer (it stops if sympy 1.14.0 is missing)
+python -I code/part1_math500/check_grader.py logs/exp8_math math500/test.jsonl   # must exit 0
+MATH500=math500/test.jsonl python -I code/part1_math500/score.py --out out/scores.json --rows out/rows \
+  base_C3=out/base_C3 edited_C3=out/edited_C3 base_C2=out/base_C2x1 edited_C2=out/edited_C2x1 \
+  base_C1=out/base_C1x1 edited_C1=out/edited_C1x1 \
+  --pair base_C3,edited_C3 --pair base_C2,edited_C2 --pair base_C1,edited_C1
+python -I code/part1_math500/cross_settings.py out/rows data/part1/order200.txt out/cross200.json 100
 ```
 
-Generation times on our GPU: C3 about 69 and 64 minutes (base, edited) for 2,000 answers each; C2 106 and 56 minutes
-for 100 answers; C1 24 and 14 minutes. Seeds are fixed per problem and sample (1000·i + k), so the two models see the
+Generation times on our GPU: C3 about 69 and 64 minutes (base, edited) for 2,000 answers each; C2 199 and 109 minutes
+for 200 answers; C1 42 and 28 minutes. Seeds are fixed per problem and sample (1000·i + k), so the two models see the
 same seeds. Sampled runs on another GPU or vLLM version will not match ours token for token. Expect the same picture
 within the standard errors in `data/part1/math500_settings.csv`.
 

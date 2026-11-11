@@ -26,10 +26,13 @@ The edit directions are published as vectors, together with the formula that app
 <tr><td><a href="data/part1/directions_0p8b.json">directions_0p8b.json</a></td><td>The two recovered directions <code>u</code> (1,024 numbers each) and the 64 edited columns per layer. Derived from MIT CSAIL's release (CC BY 4.0).</td></tr>
 <tr><td><a href="data/part1/released_regrade.json">released_regrade.json</a></td><td>The released MATH-500 texts re-graded on CPU, and the authors' flags re-summed.</td></tr>
 <tr><td><a href="data/part1/settings.json">settings.json</a></td><td>The three sampling settings, seeds, engine and prompt.</td></tr>
-<tr><td><a href="data/part1/math500_settings.csv">math500_settings.csv</a></td><td>Six runs: accuracy, standard error, share at the token cap, tokens, time on one RTX 3090.</td></tr>
-<tr><td><a href="data/part1/math500_paired.csv">math500_paired.csv</a></td><td>Paired differences, edited − base, per setting.</td></tr>
-<tr><td><a href="data/part1/math500_same100.csv">math500_same100.csv</a>, <a href="data/part1/math500_same100_pairs.csv">math500_same100_pairs.csv</a></td><td>All six arms on the same 100 problems, and the cross-setting comparisons.</td></tr>
-<tr><td><a href="data/part1/order100.txt">order100.txt</a></td><td>The 100 MATH-500 problem ids used for C1 and C2.</td></tr>
+<tr><td><a href="data/part1/scorer.json">scorer.json</a></td><td>The pinned scorer: versions, file hashes, the grader check's result, and the figures it replaced.</td></tr>
+<tr><td><a href="data/part1/math500_settings.csv">math500_settings.csv</a></td><td>Six runs (C3 on 500 × 4, C1 and C2 on 200 × 1), pinned scorer: accuracy, standard error, with plain "Answer:" lines, share at the token cap, tokens, time on one RTX 3090. Re-issued 11 November.</td></tr>
+<tr><td><a href="data/part1/math500_paired.csv">math500_paired.csv</a></td><td>Paired differences, edited − base, per setting, with 95% intervals, discordant counts, McNemar p, and the first and next 100 apart.</td></tr>
+<tr><td><a href="data/part1/math500_same200.csv">math500_same200.csv</a>, <a href="data/part1/math500_same200_pairs.csv">math500_same200_pairs.csv</a></td><td>All six arms on the same 200 problems, and the cross-setting comparisons.</td></tr>
+<tr><td><a href="data/part1/math500_same100.csv">math500_same100.csv</a>, <a href="data/part1/math500_same100_pairs.csv">math500_same100_pairs.csv</a></td><td>The same for the first 100 problems alone (re-scored).</td></tr>
+<tr><td><a href="data/part1/order200.txt">order200.txt</a>, <a href="data/part1/order100.txt">order100.txt</a></td><td>The MATH-500 problem ids used for C1 and C2 (the first 100 of the 200 are the 100).</td></tr>
+<tr><td><a href="data/part1/pair_round1_screen.json">pair_round1_screen.json</a></td><td>The review pair's teacher-forced screen of the release scaled per layer, with 5 random controls.</td></tr>
 <tr><td><a href="data/part1/mit_reported_ten_benchmarks.csv">mit_reported_ten_benchmarks.csv</a></td><td>The authors' ten benchmarks, read from their logs (not re-run).</td></tr>
 <tr><td><a href="data/part1/costs.json">costs.json</a></td><td>Perplexity, tool calling, short and long answers, and the agent task (aggregates).</td></tr>
 </table></div>
@@ -46,12 +49,16 @@ The edit directions are published as vectors, together with the formula that app
 <tr><td><a href="data/part2/bootstrap.csv">bootstrap.csv</a></td><td>Pooled differences and 95% intervals: the planned test, the extension, and the extension alone.</td></tr>
 <tr><td><a href="data/part2/perplexity_by_dose.csv">perplexity_by_dose.csv</a>, <a href="data/part2/perplexity_note.json">perplexity_note.json</a></td><td>Perplexity of every dose, edit and control.</td></tr>
 <tr><td><a href="data/part2/cost.json">cost.json</a></td><td>GPU jobs and time.</td></tr>
+<tr><td><a href="data/part2/round2.json">round2.json</a></td><td>Round 2: the review's recomputations (run-level intervals, clean answers, coverage), the variant screen's summary, the second day's data and the tool-calling check.</td></tr>
+<tr><td><a href="data/part2/variant_screen_practice.csv">variant_screen_practice.csv</a>, <a href="data/part2/variant_screen_heldout.csv">variant_screen_heldout.csv</a></td><td>The Round 2 screen, every condition, column names as in the screen's own table (S: fork score in nats; proxy: the combined expected-citation proxy).</td></tr>
 </table></div>
 
 <h2>Part 3</h2>
 <div class="table-wrap"><table>
 <tr><th>File</th><th>What</th></tr>
-<tr><td><a href="data/part3/plan.json">plan.json</a></td><td>What is being tested, and Astra's cost for comparison.</td></tr>
+<tr><td><a href="data/part3/result.json">result.json</a></td><td>The result: probes, base first replies, the edit, the 4-bit file, the benchmark runs, the regression read, the cost ledger, and the review's points.</td></tr>
+<tr><td><a href="data/part3/dose_screen.csv">dose_screen.csv</a></td><td>The dose screen of all four families and their controls.</td></tr>
+<tr><td><a href="data/part3/plan.json">plan.json</a></td><td>The plan as first published.</td></tr>
 </table></div>
 </main>
 <footer class="site"><div>Third-party data keep their own licences (MATH-500, Hermes, ToolACE, Glaive; MIT CSAIL's logs CC BY 4.0).</div></footer>

@@ -1,0 +1,139 @@
+{
+ "what": "Round 1 of the review pair for the 0.8B: a teacher-forced CPU screen of the release scaled per layer, with 5 random controls; confirmation by generation queued, not run when this was written. Aggregates only.",
+ "texts": {
+  "loop_continuations_L": 30,
+  "tool_call_openings_T": 120,
+  "plain_text_files_N": 8,
+  "productive_thinking_P": 20,
+  "non_thinking_solutions_M": 40,
+  "from_MATH500": 0
+ },
+ "release_readings_nats": {
+  "L": [
+   0.0885,
+   0.0047
+  ],
+  "T": [
+   0.1207,
+   0.0111
+  ],
+  "N": [
+   0.0312,
+   0.0046
+  ],
+  "M": [
+   0.0032,
+   0.0021
+  ]
+ },
+ "controls_5_release_size_same_columns": {
+  "L": [
+   -0.0,
+   0.0021
+  ],
+  "T": [
+   -0.036,
+   0.036
+  ],
+  "N": [
+   0.0019,
+   0.007
+  ],
+  "P": [
+   0.0023,
+   0.0063
+  ],
+  "release_above_all_5_on": [
+   "L",
+   "T",
+   "N",
+   "P"
+  ],
+  "M": "inside the controls' range and not different from 0"
+ },
+ "grid_shares_of_release": {
+  "rows_layer15_dose": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "cols_layer19_dose": [
+   0,
+   2,
+   4,
+   6
+  ],
+  "s_loop_suppression": [
+   [
+    null,
+    0.07,
+    0.18,
+    0.32
+   ],
+   [
+    0.14,
+    0.22,
+    0.32,
+    0.44
+   ],
+   [
+    0.36,
+    0.44,
+    0.53,
+    0.64
+   ],
+   [
+    0.76,
+    0.83,
+    0.91,
+    1.0
+   ]
+  ],
+  "h_harm_mean_of_T_and_N": [
+   [
+    null,
+    0.08,
+    0.19,
+    0.35
+   ],
+   [
+    0.08,
+    0.16,
+    0.28,
+    0.43
+   ],
+   [
+    0.27,
+    0.35,
+    0.46,
+    0.61
+   ],
+   [
+    0.69,
+    0.76,
+    0.86,
+    1.0
+   ]
+  ],
+  "harm_share_over_benefit_share_range": [
+   0.57,
+   1.1
+  ]
+ },
+ "finalist_frozen_before_generation": {
+  "name": "g4_0",
+  "layer15_dose": 4,
+  "layer19_dose": 0,
+  "s": 0.362,
+  "h": 0.269
+ },
+ "stray_think_close_in_non_thinking_C3": {
+  "base": "328/2000 (16.4%)",
+  "release": "478/2000 (23.9%)",
+  "difference_points": 7.5,
+  "se": 1.26,
+  "note": "a description, not a cause"
+ },
+ "status": "MATH-500 confirmation of the finalist queued behind a paused shared GPU queue"
+}

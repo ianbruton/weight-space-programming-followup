@@ -1,4 +1,6 @@
-"""Exact MATH answer grader for the scale study (own code; standard library + sympy only).
+"""Exact MATH answer grader, pinned version (the re-score after review). Three changes from the first version, each
+marked "r1": SymPy imported and pinned at load; the base-subscript rule narrowed; a supplementary extraction and the
+first version's base rule kept as separate functions for counting. Own code; standard library + sympy only.
 
 Extraction follows the authors' rule as read in logs/exp8_math/code/mathqa.py (not imported, not run):
   - the text read is what follows the last '</think>' if there is one, else the whole text;
@@ -151,14 +153,18 @@ def norm(s):
 
 
 # ------------------------------------------------------------------ numeric check (sympy, small LaTeX subset)
-_SYMPY = []
+# r1: SymPy is imported when the module loads and its version is pinned. The stage-1 copy imported it
+# lazily inside try/except, so an interpreter without SymPy silently graded 10/11 against
+# \\frac{10}{11} as wrong. A missing or different SymPy now stops the scorer with a traceback.
+import sympy as _sympy  # noqa: E402
+
+SYMPY_PIN = "1.14.0"
+if _sympy.__version__ != SYMPY_PIN:
+    raise ImportError(f"grader pinned to sympy {SYMPY_PIN}, found {_sympy.__version__}")
 
 
 def _sp():
-    if not _SYMPY:
-        import sympy  # noqa: PLC0415
-        _SYMPY.append(sympy)
-    return _SYMPY[0]
+    return _sympy
 
 
 def _latex_to_py(s):
@@ -237,8 +243,24 @@ def _atom_equal(a, b):
     return a == b or _num_equal(a, b)
 
 
+_BASED = re.compile(r"([0-9A-F]*[0-9][0-9A-F]*)_(\d+)")
+
+
+def _base_equal(a, b):
+    """52_8 against 52: equal (a number in a stated base against the same digits with no base; math-verify reads the
+    two as equal). r1 change: when BOTH sides carry a subscript they must be the same string (52_9 is not 52_8), and
+    only digit strings with a numeric base qualify (x_1 is not x_2 and not x). The stage-1 rule dropped any
+    subscript from both sides."""
+    ma, mb = _BASED.fullmatch(a), _BASED.fullmatch(b)
+    if ma and not mb:
+        return ma.group(1) == b
+    if mb and not ma:
+        return mb.group(1) == a
+    return False
+
+
 def _drop_base(s):
-    """52_8 -> 52 (a number in a stated base); math-verify reads the two as equal, so this does too."""
+    """the stage-1 rule, kept only so score.py can count what the r1 rule changes."""
     m = re.fullmatch(r"(\w+)_\w+", s)
     return m.group(1) if m else s
 
@@ -247,7 +269,7 @@ def equiv(pred, gold):
     if pred is None or gold is None:
         return False
     a, b = norm(pred), norm(gold)
-    if a == b or _drop_base(a) == _drop_base(b):
+    if a == b or _base_equal(a, b):
         return True
     if _sym_equal(a, b):        # before the tuple rule, which would split (x+2)(x+1) as a pair
         return True
@@ -312,12 +334,42 @@ def _sym_equal(a, b):
         return False
 
 
+_PLAIN = re.compile(r"(?:\*\*)?(?:final\s+answer|answer)(?:\*\*)?\s*(?:is)?\s*[:=]\s*(?:\*\*)?\s*(.+?)\s*(?:\*\*)?\s*$",
+                    re.IGNORECASE)
+
+
+def extract_supp(text):
+    """supplementary rule (r1, reported in its own column, never in the main one): the authors' box if there is one;
+    otherwise the last line of the answer text of the form 'Answer: X' / 'Final Answer: X' / '**Answer:** X',
+    with surrounding $ and a trailing full stop removed."""
+    p = extract(text)
+    if p is not None:
+        return p
+    for line in reversed(answer_text(text).strip().split("\n")[-5:]):
+        m = _PLAIN.search(line.strip())
+        if m:
+            out = m.group(1).strip().rstrip(".").strip().strip("$").strip().rstrip(".").strip()
+            return out or None
+    return None
+
+
+def equiv_stage1(pred, gold):
+    """equiv with the stage-1 base rule (any subscript dropped from both sides) added back: for counting only."""
+    if pred is None or gold is None:
+        return False
+    return equiv(pred, gold) or _drop_base(norm(pred)) == _drop_base(norm(gold))
+
+
 def grade(text, gold, thinking):
-    """{pred, correct (authors' extraction), pred_strict, correct_strict}."""
+    """{pred, correct (authors' extraction), correct_strict, correct_supp (supplementary extraction),
+    correct_stage1 (authors' extraction, stage-1 base rule)}."""
     p = extract(text)
     ps = extract_strict(text, thinking)
+    q = extract_supp(text)
     return {"pred": p if p is None or len(p) <= 200 else p[:200], "correct": equiv(p, gold),
-            "correct_strict": equiv(ps, gold) if ps is not None else False}
+            "correct_strict": equiv(ps, gold) if ps is not None else False,
+            "pred_supp": q if q is None or len(q) <= 200 else q[:200], "correct_supp": equiv(q, gold),
+            "correct_stage1": equiv_stage1(p, gold)}
 
 
 # ------------------------------------------------------------------ looping (own rule, from the authors' description)

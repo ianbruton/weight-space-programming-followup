@@ -1,5 +1,8 @@
-comparison,points,se_points
-edited_C3-base_C3,-1.5,2.53
-edited_C1-base_C3,10.5,3.75
-edited_C2-base_C3,-1.5,4.32
-edited_C1-edited_C3,12.0,4.47
+comparison,problems,points,se_points,ci95_low,ci95_high
+edited_C3 - base_C3,100,-1.75,2.54,-6.74,3.24
+edited_C2 - base_C3,100,0.25,4.34,-8.27,8.77
+edited_C1 - base_C3,100,10.25,3.64,3.11,17.39
+edited_C1 - edited_C3,100,12.0,4.36,3.46,20.54
+edited_C2 - edited_C3,100,2.0,4.11,-6.05,10.05
+edited_C2 - base_C2,100,21.0,4.98,11.23,30.77
+edited_C1 - base_C1,100,47.0,5.02,37.17,56.83

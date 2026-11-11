@@ -1,0 +1,55 @@
+{
+ "what": "The pinned scorer and its check, run on 2026-11-11 for the re-issue of the Part 1 tables.",
+ "python": "3.12.11",
+ "sympy": "1.14.0",
+ "grader_sha256": "0c924f744bdac8983d6e7db981d10e5191e330e6e47eb5b65ba4cd26b3e1ebd0",
+ "score_sha256": "2d144462a246a08d72e77657667fcac73368b11da876ccb26a5202012fde0d61",
+ "check_grader": {
+  "equivalence_against_authors_math_verify_flags": {
+   "agree": 338,
+   "disagree": 0,
+   "first_answers_without_extracted_answer_not_checked": 662
+  },
+  "extraction_against_authors_extracted_answer": {
+   "agree": 400,
+   "of_released_texts": 400
+  },
+  "unit_cases": {
+   "cases": 17,
+   "failed": 0
+  },
+  "exit_code": 0,
+  "without_sympy": "stops with ModuleNotFoundError, exit 1"
+ },
+ "first_scoring_problem": "Two of the six cells (C2 and C1) were first scored by an interpreter without SymPy; the first grader caught the import error and graded fractions such as 10/11 against \\frac{10}{11} as wrong. Found in review by GPT-6 Astra.",
+ "earlier_figures_replaced": {
+  "edited_C2_first100": {
+   "was": 36.0,
+   "now": 39.0
+  },
+  "edited_C1_first100": {
+   "was": 48.0,
+   "now": 49.0
+  },
+  "base_C3_on_first100": {
+   "was": 37.5,
+   "now": 38.75
+  },
+  "edited_C2_on200": {
+   "was": 42.0,
+   "now": 44.5
+  },
+  "edited_C1_on200": {
+   "was": 45.0,
+   "now": 48.0
+  },
+  "base_C3_on200": {
+   "was": 40.5,
+   "now": 41.75
+  },
+  "edited_C1_minus_base_C3_on200": {
+   "was": 4.5,
+   "now": 6.25
+  }
+ }
+}

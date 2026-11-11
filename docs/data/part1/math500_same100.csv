@@ -1,7 +1,7 @@
-arm,accuracy_pct,se_pct
-base_C3,37.5,3.4
-edited_C3,36.0,3.38
-base_C2x1,18.0,3.86
-edited_C2x1,36.0,4.82
-base_C1x1,2.0,1.41
-edited_C1x1,48.0,5.02
+arm,problems,samples_per_problem,accuracy_pct,se_pct
+base_C3,100,4,38.75,3.43
+edited_C3,100,4,37.0,3.42
+base_C2,100,1,18.0,3.86
+edited_C2,100,1,39.0,4.9
+base_C1,100,1,2.0,1.41
+edited_C1,100,1,49.0,5.02

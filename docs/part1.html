@@ -16,17 +16,20 @@
 </nav></header>
 <main>
 <h1>Part 1: MIT's 0.8B edit, reproduced and compared fairly</h1>
-<p class="lede">The edit is real and is exactly what was released. Most of the headline gain comes from a sampling
-setting in which the unedited model loops. With each model at its own best setting, the edited model is still ahead,
-by about ten points. The edit also has costs that the maths benchmarks do not show.</p>
+<p class="lede">The edit is real and is exactly what was released. Under the post's sampling settings the unedited
+model almost never finishes, so the headline gain is measured against a base those settings break. Looking across
+settings after the fact, the edited model's best is about six points above the base model's best, on 200 problems.
+The edit also has costs that the maths benchmarks do not show.</p>
 
 <div class="box neutral">
 <p><strong>Corrected after review (11 November).</strong> An independent review by GPT-6 Astra found that our grader
 silently stopped recognising equivalent fractions (such as <code>10/11</code> against <code>\frac{10}{11}</code>) when
-it ran without its maths library, and two of our six cells were scored that way. Re-graded correctly, the edited model
-scores <strong>39%</strong> (not 36%) with the card's thinking settings and <strong>49%</strong> (not 48%) with the
-post's. So the edit's thinking-mode gain is slightly <em>larger</em> than we first reported. The numbers below are
-Astra's re-grade. Our own re-grade with a pinned scorer that fails loudly is in progress and will replace them.</p>
+it ran without its maths library, and two of our six cells had been scored that way. We now score everything with a
+<strong>pinned scorer</strong> that stops if the library is missing, and a grader check that fails on any
+disagreement (<a href="data/part1/scorer.json">data/part1/scorer.json</a>). Re-scored, the edited model's
+thinking-mode accuracies rise by 1 to 3 points; nothing else moves. C1 and C2 now cover 200 problems, not 100. All
+numbers on this page are the re-scored ones. Astra's other points are applied below and listed in
+<a href="#review">What the review changed</a>.</p>
 </div>
 
 <div class="box">
@@ -35,13 +38,15 @@ Astra's re-grade. Our own re-grade with a pinned scorer that fails loudly is in 
   <li>Exactly 2 of 488 tensors differ. The formula is <code>W = W0 − 6·u(uᵀW0)</code> on 64 columns of each tensor.
   That flips the component along <code>u</code> and makes it five times larger. It is not the direction subtracted
   once.</li>
-  <li>Under the post's settings: base 2%, edited 49% (our run, 100 problems). Under the card's thinking settings:
-  base 18%, edited 39%. Under the model card's non-thinking settings the base scores 44.6% and the edit
-  <em>costs</em> 3.25 points.</li>
-  <li>Each model at its best: edited (post's settings) 49% against base (card's non-thinking) 38.75% on the same 100
-  problems, <strong>+10.25 ± 3.6 points</strong> (95% about +3 to +17; exploratory, see below).</li>
-  <li>Costs: perplexity +5.5% on all 47 test files, fewer tool calls on standard datasets, and in our agent task
-  the edited model looked something up before deciding on 7 of 81 items, against 43 for the base.</li>
+  <li>Under the post's settings: base 7.5%, edited 48.0% (our runs, 200 problems, the same problems and seeds).
+  Under the card's thinking settings: base 19.0%, edited 44.5%. Under the model card's non-thinking settings the base
+  scores 44.6% (all 500 problems) and the edit <em>costs</em> 3.25 points.</li>
+  <li>Across settings, chosen after seeing the results: edited (post's settings) 48.0% against base (card's
+  non-thinking) 41.75% on the same 200 problems, <strong>+6.25 ± 2.7 points</strong> (95% about +0.9 to +11.6). It was
+  +10 on the first 100 problems and +2 on the next 100.</li>
+  <li>Costs: perplexity +5.5% on 47 test files, fewer replies with a tool call on standard datasets, and in one run of
+  our agent task the edited model looked something up before deciding on 7 of 81 items, against 43 for the
+  base.</li>
 </ul>
 </div>
 
@@ -87,7 +92,8 @@ the edited columns: <a href="data/part1/directions_0p8b.json">data/part1/directi
   <li>The 64 columns are not simply the ones that write most along <code>u</code>. They were ranked by write
   strength times how much more each column fires on looping text (step 6 below).</li>
   <li>Our search for <code>u</code> rebuilds all but 133 and 118 entries per tensor. The audit's search came closer
-  (42 and 65 misses). Neither reproduces every entry.</li>
+  (42 and 65 misses). Neither reproduces every entry, so the recovered <code>u</code> gives the edit's
+  structure and an approximate factorisation, not an exact reconstruction.</li>
 </ul>
 
 <h3>How Astra found the direction (from the released logs)</h3>
@@ -112,9 +118,9 @@ the edited columns: <a href="data/part1/directions_0p8b.json">data/part1/directi
   <li><strong>Pick α = 6 and freeze.</strong> On 1,152 held-out practice problems: 10.6% → 60.4%. 576 of the 579
   rescues had been cut off at the cap. On answers that already finished, the change was zero.</li>
 </ol>
-<p>Step 7 is the key fact: <strong>the gain is termination</strong>. The edit makes the model finish answers it would
-otherwise loop on. The authors draw the same conclusion: an edit like this can remove an obstacle that hides an
-ability, not add one.</p>
+<p>Step 7 is the key fact: <strong>most of the gain is termination</strong>. The edit makes the model finish answers
+it would otherwise loop on. The authors draw the same conclusion: an edit like this can remove an obstacle that hides
+an ability, not add one. (Under the card's settings it is not only that: see section 3.)</p>
 
 <h2>2. Re-grading the released answers</h2>
 <p>Before running anything, we re-graded what was released, on CPU, with our own grader. The authors' 2,000
@@ -129,12 +135,14 @@ per-sample flags per model re-sum exactly to the printed 7.9% and 48.1%. Their t
 </table></div>
 <p class="src">Data: <a href="data/part1/released_regrade.json">data/part1/released_regrade.json</a>. That simple
 grader agreed with the authors' math-verify flags on 437 of 440 texts. The 3 disagreements were answers in a base
-subscript (<code>52_8</code> against <code>52</code>). The grader we used for every run below agrees with all 338
-released first answers it can compare.</p>
+subscript (<code>52_8</code> against <code>52</code>). The pinned grader we used for every run below agrees with the
+authors' flags on all 338 released first answers that have an extracted answer, and its extraction agrees with theirs
+on all 400 released texts. That is agreement on those answers, not proof that it grades every new answer form
+correctly.</p>
 <p>Of the 200 base answers, 186 hit the cap. 161 of those have no boxed answer at all. The scores under the post's
 settings hold up, and so does the reason for the gain.</p>
 
-<h2>3. Three settings, both models, one grader</h2>
+<h2>3. Three settings, both models, one pinned scorer</h2>
 <p>The post compares the two models under one setting, its own (C1). The model card recommends two others. We ran
 both models under all three with vLLM on one RTX 3090. Sample <i>k</i> of problem <i>i</i> used seed
 1000·<i>i</i> + <i>k</i>, the same for both models, so every difference is paired.</p>
@@ -149,7 +157,7 @@ both models under all three with vLLM on one RTX 3090. Sample <i>k</i> of proble
 <figure>
 <svg viewBox="0 0 640 300" role="img" aria-labelledby="c1t c1d">
   <title id="c1t">MATH-500 accuracy, base against edited, under three settings</title>
-  <desc id="c1d">C3: base 44.6%, edited 41.35%. C2: base 18%, edited 39%. C1: base 2%, edited 49%.</desc>
+  <desc id="c1d">C3, 500 problems: base 44.6%, edited 41.35%. C2, 200 problems: base 19.0%, edited 44.5%. C1, 200 problems: base 7.5%, edited 48.0%.</desc>
   <g font-size="12">
     <line class="axis" x1="60" x2="620" y1="240" y2="240"/>
     <line class="axis" x1="60" x2="620" y1="196" y2="196" stroke-dasharray="2 4"/>
@@ -167,74 +175,110 @@ both models under all three with vLLM on one RTX 3090. Sample <i>k</i> of proble
     <rect class="edit" x="165" y="58.1" width="50" height="181.9"/>
     <text x="130" y="38" text-anchor="middle">44.6</text>
     <text x="190" y="52" text-anchor="middle">41.4</text>
-    <rect class="base" x="285" y="160.8" width="50" height="79.2"/>
-    <rect class="edit" x="345" y="68.4" width="50" height="171.6"/>
-    <text x="310" y="155" text-anchor="middle">18.0</text>
-    <text x="370" y="62" text-anchor="middle">39.0</text>
-    <rect class="base" x="465" y="231.2" width="50" height="8.8"/>
-    <rect class="edit" x="525" y="24.4" width="50" height="215.6"/>
-    <text x="490" y="225" text-anchor="middle">2.0</text>
-    <text x="550" y="18" text-anchor="middle">49.0</text>
+    <rect class="base" x="285" y="156.4" width="50" height="83.6"/>
+    <rect class="edit" x="345" y="44.2" width="50" height="195.8"/>
+    <text x="310" y="150" text-anchor="middle">19.0</text>
+    <text x="370" y="38" text-anchor="middle">44.5</text>
+    <rect class="base" x="465" y="207" width="50" height="33"/>
+    <rect class="edit" x="525" y="28.8" width="50" height="211.2"/>
+    <text x="490" y="201" text-anchor="middle">7.5</text>
+    <text x="550" y="22" text-anchor="middle">48.0</text>
     <text x="160" y="262" text-anchor="middle">C3: card, no thinking</text>
     <text class="muted" x="160" y="280" text-anchor="middle">500 problems × 4</text>
     <text x="340" y="262" text-anchor="middle">C2: card, thinking</text>
-    <text class="muted" x="340" y="280" text-anchor="middle">100 problems × 1</text>
+    <text class="muted" x="340" y="280" text-anchor="middle">200 problems × 1</text>
     <text x="520" y="262" text-anchor="middle">C1: the post's</text>
-    <text class="muted" x="520" y="280" text-anchor="middle">100 problems × 1</text>
+    <text class="muted" x="520" y="280" text-anchor="middle">200 problems × 1</text>
   </g>
 </svg>
 <figcaption><span class="legend"><span><i style="background:var(--base)"></i>base</span><span><i style="background:var(--edit)"></i>edited (MIT's release)</span></span>
-MATH-500 accuracy. Data: <a href="data/part1/math500_settings.csv">data/part1/math500_settings.csv</a>.</figcaption>
+MATH-500 accuracy, pinned scorer. Data: <a href="data/part1/math500_settings.csv">data/part1/math500_settings.csv</a>.</figcaption>
 </figure>
 
 <div class="table-wrap"><table>
 <tr><th>Setting</th><th>Model</th><th class="n">Problems × samples</th><th class="n">Accuracy (± se)</th><th class="n">At the token cap</th><th class="n">Mean tokens</th></tr>
 <tr><td>C3, card non-thinking</td><td>base</td><td class="n">500 × 4</td><td class="n">44.6% ± 1.7</td><td class="n">0.35%</td><td class="n">9,014</td></tr>
 <tr><td>C3, card non-thinking</td><td>edited</td><td class="n">500 × 4</td><td class="n">41.35% ± 1.7</td><td class="n">0.05%</td><td class="n">8,407</td></tr>
-<tr><td>C2, card thinking</td><td>base</td><td class="n">100 × 1</td><td class="n">18.0% ± 3.9</td><td class="n">83%</td><td class="n">73,180</td></tr>
-<tr><td>C2, card thinking</td><td>edited</td><td class="n">100 × 1</td><td class="n">39.0% ± 4.9</td><td class="n">28%</td><td class="n">51,087</td></tr>
-<tr><td>C1, the post's</td><td>base</td><td class="n">100 × 1</td><td class="n">2.0% ± 1.4</td><td class="n">98%</td><td class="n">32,217</td></tr>
-<tr><td>C1, the post's</td><td>edited</td><td class="n">100 × 1</td><td class="n">49.0% ± 5.0</td><td class="n">34%</td><td class="n">23,241</td></tr>
+<tr><td>C2, card thinking</td><td>base</td><td class="n">200 × 1</td><td class="n">19.0% ± 2.8</td><td class="n">80.5%</td><td class="n">71,118</td></tr>
+<tr><td>C2, card thinking</td><td>edited</td><td class="n">200 × 1</td><td class="n">44.5% ± 3.5</td><td class="n">24.5%</td><td class="n">49,847</td></tr>
+<tr><td>C1, the post's</td><td>base</td><td class="n">200 × 1</td><td class="n">7.5% ± 1.9</td><td class="n">93.0%</td><td class="n">30,837</td></tr>
+<tr><td>C1, the post's</td><td>edited</td><td class="n">200 × 1</td><td class="n">48.0% ± 3.5</td><td class="n">33.5%</td><td class="n">22,345</td></tr>
 </table></div>
-<p class="src">Data: <a href="data/part1/math500_settings.csv">data/part1/math500_settings.csv</a> (to be
-re-issued with the corrected scores). Paired differences (edited − base): C3 −3.25 ± 1.18 (95% −5.6 to −0.9),
-C2 +21.0 ± 5.0 (95% +11.2 to +30.8), C1 +47.0 ± 5.0
-(<a href="data/part1/math500_paired.csv">data/part1/math500_paired.csv</a>). C1 and C2 use the same 100 problems,
-the first 100 of a seeded shuffle (<a href="data/part1/order100.txt">data/part1/order100.txt</a>), because most base
-answers run to the cap and take far longer.</p>
+<p class="src">Data: <a href="data/part1/math500_settings.csv">data/part1/math500_settings.csv</a>. C1 and C2 use
+the same 200 problems, the first 200 of a seeded shuffle
+(<a href="data/part1/order200.txt">data/part1/order200.txt</a>; its first 100 are
+<a href="data/part1/order100.txt">order100.txt</a>), one sample each, because most base answers run to the cap and
+take far longer.</p>
 
-<h3>Each model at its best</h3>
-<p>On the same 100 problems (C3 restricted to them, still 4 samples each):</p>
+<p><strong>Paired differences, edited − base, on the same problems and seeds:</strong></p>
 <div class="table-wrap"><table>
-<tr><th></th><th class="n">C3</th><th class="n">C2</th><th class="n">C1</th></tr>
-<tr><td>base</td><td class="n"><strong>38.75</strong></td><td class="n">18.0 ± 3.9</td><td class="n">2.0 ± 1.4</td></tr>
-<tr><td>edited</td><td class="n">37.0</td><td class="n">39.0 ± 4.9</td><td class="n"><strong>49.0 ± 5.0</strong></td></tr>
+<tr><th>Setting</th><th class="n">Problems</th><th class="n">Edited − base (points ± se)</th><th class="n">95% interval</th><th class="n">Only base right / only edited right</th><th class="n">First 100 / next 100</th></tr>
+<tr><td>C3</td><td class="n">500 (× 4)</td><td class="n">−3.25 ± 1.18</td><td class="n">−5.6 to −0.9</td><td class="n">157 / 115 problems</td><td class="n"></td></tr>
+<tr><td>C2</td><td class="n">200</td><td class="n">+25.5 ± 3.7</td><td class="n">+18.3 to +32.7</td><td class="n">8 / 59</td><td class="n">+21.0 / +30.0</td></tr>
+<tr><td>C1</td><td class="n">200</td><td class="n">+40.5 ± 3.5</td><td class="n">+33.7 to +47.3</td><td class="n">0 / 81</td><td class="n">+47.0 / +34.0</td></tr>
 </table></div>
-<p class="src">Data: <a href="data/part1/math500_same100.csv">data/part1/math500_same100.csv</a> and
-<a href="data/part1/math500_same100_pairs.csv">data/part1/math500_same100_pairs.csv</a>.</p>
-<p>The base model is at its best without thinking (C3, 38.75%). The edited model is at its best under the post's
-settings (C1, 49%). The paired difference is <strong>+10.25 ± 3.6 points</strong> (95% about +3.1 to +17.4). That is
-the fair comparison: smaller than the post's headline, but not zero. Caveats: picking each model's best setting from
-these same results is a choice made after seeing them, which the interval does not account for. It compares 1 sample
-with 4 on 100 problems, a thinking mode with a non-thinking one, and different token budgets. The edited model's
-thinking-mode C2 against the base's C3 is level (+0.25 ± 4.3). A 200-problem run of C1 and C2 is under way.</p>
+<p class="src">Intervals are difference ± 1.96 se over problems, unadjusted. For C3, "only base / only edited" counts
+problems where one model's 4-sample mean is higher. Data:
+<a href="data/part1/math500_paired.csv">data/part1/math500_paired.csv</a>.</p>
 
 <ul>
-  <li><strong>C1 (the post's):</strong> the base runs to the 32,768 cap on 98% of answers, 98% of those ending in a
-  loop. Most of the headline gain is the base model failing under these settings.</li>
-  <li><strong>C2 (the card's thinking):</strong> the edit still helps (+21 ± 5). The base still loops: 83% at the
-  81,920 cap.</li>
+  <li><strong>C1 (the post's):</strong> the base runs to the 32,768 cap on 93% of answers, 96% of those ending in a
+  loop. So the post's difference is measured against a base that these settings break. The same-settings gain itself
+  is real: +40.5 points, 81 problems gained and none lost.</li>
+  <li><strong>C2 (the card's thinking):</strong> the edit still helps, +25.5 ± 3.7. The base still loops: 80.5% at
+  the 81,920 cap. It is not a pure rescue: 8 problems the base got right are lost.</li>
   <li><strong>C3 (the card's non-thinking):</strong> the base rarely reaches the cap (0.35%). With no loop to fix,
   the edit costs 3.25 ± 1.2 points.</li>
+  <li>The settings differ in several things at once (temperature and token allowance between C1 and C2; also mode,
+  top_p and presence penalty for C3). Which part of a setting causes what was not separated.</li>
 </ul>
 <p>The audit's base numbers were 7.2% (C1), 22.3% (C2) and 44.0% (C3), on a different GPU and vLLM version. Ours
-tell the same story, with C1 lower here (2.0% on 100 single samples), and the same C2 base (18% against 22.3%) within
-its error. In one sentence: <strong>the edit makes thinking mode usable on a 0.8B model that otherwise loops in it.</strong></p>
-<p><em>A grading note.</em> The edited model sometimes ends without a <code>\boxed{}</code> (16 of 100 under C2, 4
-under C1). The authors' rule counts these as wrong, and so do we. Reading a plain "Answer: N" line as well would add
-at most 2 points to the edited model under either setting. No conclusion changes. Agreement with the authors'
-released flags (338 of 338, in the scorer's intended environment) checks the grader on those answers only, not on
-every form a new answer can take.</p>
+tell the same story within their errors. In one sentence: <strong>the edit makes thinking mode usable on a 0.8B model
+that otherwise loops in it.</strong></p>
+
+<h3>Looking across settings</h3>
+<p>On the same 200 problems (C3 restricted to them, still 4 samples each):</p>
+<div class="table-wrap"><table>
+<tr><th></th><th class="n">C3</th><th class="n">C2</th><th class="n">C1</th></tr>
+<tr><td>base</td><td class="n"><strong>41.75 ± 2.5</strong></td><td class="n">19.0 ± 2.8</td><td class="n">7.5 ± 1.9</td></tr>
+<tr><td>edited</td><td class="n">38.75 ± 2.5</td><td class="n">44.5 ± 3.5</td><td class="n"><strong>48.0 ± 3.5</strong></td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>Comparison, same 200 problems</th><th class="n">Points ± se</th><th class="n">95% interval</th><th class="n">First 100</th><th class="n">Next 100</th></tr>
+<tr class="hl"><td>edited C1 − base C3</td><td class="n">+6.25 ± 2.74</td><td class="n">+0.9 to +11.6</td><td class="n">+10.25</td><td class="n">+2.25</td></tr>
+<tr><td>edited C2 − base C3</td><td class="n">+2.75 ± 2.94</td><td class="n">−3.0 to +8.5</td><td class="n">+0.25</td><td class="n">+5.25</td></tr>
+<tr><td>edited C1 − edited C3</td><td class="n">+9.25 ± 2.98</td><td class="n">+3.4 to +15.1</td><td class="n">+12.0</td><td class="n">+6.5</td></tr>
+<tr><td>edited C3 − base C3</td><td class="n">−3.0 ± 1.85</td><td class="n">−6.6 to +0.6</td><td class="n">−1.75</td><td class="n">−4.25</td></tr>
+</table></div>
+<p class="src">Data: <a href="data/part1/math500_same200.csv">data/part1/math500_same200.csv</a> and
+<a href="data/part1/math500_same200_pairs.csv">data/part1/math500_same200_pairs.csv</a> (the first 100 alone:
+<a href="data/part1/math500_same100.csv">math500_same100.csv</a>,
+<a href="data/part1/math500_same100_pairs.csv">math500_same100_pairs.csv</a>). Computed with
+<code>code/part1_math500/cross_settings.py</code>.</p>
+<p>Looking across settings after the fact: the base model does best without thinking (C3, 41.75% on these 200), the
+edited model under the post's settings (C1, 48.0%). The difference is <strong>+6.25 ± 2.7 points</strong>. It was
++10.25 on the first 100 problems we ran and +2.25 on the next 100, so the first estimate was on the high side. Under
+the card's own two settings the edited model in thinking mode and the base model without thinking are level within
+error (+2.75 ± 2.9). These cells were chosen after seeing the results, and the intervals do not allow for that
+choice. They also compare 1 sample with 4, a thinking mode with a non-thinking one, and different token budgets.</p>
+
+<p><em>A grading note.</em> The edited model sometimes ends without a <code>\boxed{}</code> (25 of 200 under C2, 8
+under C1). The authors' rule counts these as wrong, and so do we. Reading a plain final "Answer: N" line as well would
+add 1.5 points to the edited model under C2 and 1 under C1, and 0.3 under C3; the base gains nothing. Other grading
+errors are not bounded by this. No conclusion depends on it.</p>
+
+<h3>What the review pair is testing next</h3>
+<p>Astra asked whether the costs come from the dose or the second layer. Fable screened 14 other points of the family
+"the released change, scaled per layer" (doses 0, 2, 4, 6 in each layer) and 5 random directions of the release's size
+on its columns, on CPU, by reading 218 fixed texts (none from MATH-500). The release's effects on loops, on
+tool-call openings and on plain text are all above all 5 random controls, so they belong to the direction, not to the
+size of the change. But lowering the dose or dropping a layer gave up about as much loop suppression as harm, at every
+point of the grid (harm share 0.57 to 1.10 times the benefit share). One point (layer 15 at dose 4, layer 19
+untouched) was frozen before any generation and is queued for a MATH-500 test with the same seeds; that test had not
+run when this page was written. One lead: in non-thinking mode the edit raises how often the model writes a stray
+end-of-thinking tag (16.4% to 23.9% of answers), and answers with that tag are more often wrong. That is a
+description, not a cause.</p>
+<p class="src">Data: <a href="data/part1/pair_round1_screen.json">data/part1/pair_round1_screen.json</a>.</p>
 
 <h2>4. What the edit costs</h2>
 <p>MIT's own ten benchmarks show no loss. None is worse after the edit. In every one, the unedited model hits the
@@ -258,50 +302,70 @@ every form a new answer can take.</p>
 <p>So we measured things those benchmarks do not cover, with identical settings for both models:</p>
 <div class="table-wrap"><table>
 <tr><th>Measure</th><th class="n">Base</th><th class="n">Edited</th><th>How sure</th></tr>
-<tr class="hl"><td><strong>Perplexity</strong>, 47 private text files written in 2026 (329,935 tokens)</td><td class="n">7.466</td><td class="n">7.873 (+5.5%)</td><td>worse on 47 of 47 files; 95% CI +4.9% to +6.2%</td></tr>
-<tr><td><strong>Tool calling</strong>, 900 items (Hermes, ToolACE, Glaive): a parsable call</td><td class="n">837</td><td class="n">812</td><td>32 base-only vs 7 edited-only, p = 7e-5</td></tr>
-<tr><td>… right function names</td><td class="n">713</td><td class="n">693</td><td>41 vs 21, p = 0.015</td></tr>
-<tr><td>… exact names and arguments</td><td class="n">543</td><td class="n">530</td><td>45 vs 32, p = 0.17: not shown</td></tr>
-<tr class="hl"><td><strong>Agent task</strong> (private, one run each): items checked with a tool before deciding, of 81</td><td class="n">43</td><td class="n">7</td><td>far outside the base's run-to-run noise</td></tr>
+<tr class="hl"><td><strong>Perplexity</strong>, 47 private text files written in 2026 (329,935 tokens)</td><td class="n">7.466</td><td class="n">7.873 (+5.5%)</td><td>worse on 47 of 47 files; 95% CI +4.9% to +6.2%; 42 of the 47 from one source</td></tr>
+<tr><td><strong>Tool calling</strong>, 900 items (Hermes, ToolACE, Glaive): exact names and arguments, the measure named beforehand</td><td class="n">543</td><td class="n">530</td><td>45 base-only vs 32 edited-only, p = 0.17: not distinguishable from chance</td></tr>
+<tr><td>… right function names (looked at after)</td><td class="n">713</td><td class="n">693</td><td>41 vs 21, p = 0.015</td></tr>
+<tr><td>… any parsable call (looked at after)</td><td class="n">837</td><td class="n">812</td><td>32 vs 7, p = 7e-5</td></tr>
+<tr class="hl"><td><strong>Agent task</strong> (private, one run each): items checked with a tool before deciding, of 81</td><td class="n">43</td><td class="n">7</td><td>one run each; run-to-run spread not measured</td></tr>
 <tr><td>… tool calls made</td><td class="n">275</td><td class="n">37</td><td>−87%</td></tr>
-<tr><td>… valid decisions, of 70</td><td class="n">66</td><td class="n">55</td><td>one run each</td></tr>
+<tr><td>… decisions valid in form, of 70</td><td class="n">66</td><td class="n">55</td><td>one run each</td></tr>
 <tr><td>… citations that hold / made</td><td class="n">14 / 239</td><td class="n">15 / 140</td><td>same holds, 41% fewer citations</td></tr>
-<tr><td><strong>Speculative decoding</strong>: draft tokens accepted</td><td class="n">92.8%</td><td class="n">81.1%</td><td>the draft head was not edited</td></tr>
-<tr><td><strong>Short answers</strong>, 100 ten-option questions, thinking off</td><td class="n">22</td><td class="n">23</td><td>p = 1.0: no change</td></tr>
-<tr><td><strong>Long answers</strong>, 30 prompts, card sampling: mean tokens</td><td class="n">2,312</td><td class="n">2,233</td><td>95% CI −341 to +192: no change</td></tr>
+<tr><td><strong>Speculative decoding</strong>: draft tokens accepted</td><td class="n">92.8%</td><td class="n">81.1%</td><td>the draft head was not edited; the two models generated different text, so the cause is not shown</td></tr>
+<tr><td><strong>Short answers</strong>, 100 ten-option questions, thinking off</td><td class="n">22</td><td class="n">23</td><td>p = 1.0: no difference detected (two of four subtests at chance for both)</td></tr>
+<tr><td><strong>Long answers</strong>, 30 prompts, card sampling: mean tokens</td><td class="n">2,312</td><td class="n">2,233</td><td>95% CI −341 to +192: no difference detected (length is not quality)</td></tr>
 <tr><td><strong>Long answers</strong>, greedy: cut at 4,096 tokens (all loops in the base)</td><td class="n">9</td><td class="n">1</td><td>fewer loops: a gain</td></tr>
 </table></div>
 <p class="src">Data: <a href="data/part1/costs.json">data/part1/costs.json</a>. Counts are paired on the same
-items (McNemar's exact test). Perplexity uses a bootstrap over files plus a sign test.</p>
+items (McNemar's exact test). Perplexity uses a bootstrap over files plus a sign test; the files are related, so
+this is a loss on this corpus, not a general loss of language quality. The tool items are greedy, first turn only, and
+only items whose reference answer is a call: they do not test whether the model calls a tool when it should not.</p>
 
 <p><strong>The agent task</strong> is a private benchmark. A review agent decides 70 items plus 11 injected test
 items. It may call read-only tools (read a file, list a folder, check version-control status). It must back each
-decision with cited evidence. The edited model still decided every item, but it rarely looked first. Its share of
-citations that hold rose only because it cited less. A metric that "improved" there hid a collapse in checking.</p>
+decision with cited evidence. In one run each, the tool calls the harness actually ran fell from 135 to 4 (the rest
+were refused), and items checked with a tool from 43 to 7. The base run replays an earlier run exactly under the same seed, which shows the harness is
+deterministic, not how much runs differ across seeds. "Valid" means valid in form; agreement with a larger model is not
+correctness. The edited model still decided every item, but it rarely looked first. Its share of citations that hold
+rose only because it cited less.</p>
 
 <h3>One pattern</h3>
 <p>The edit makes the model stop sooner. It ends its thinking instead of running to the cap, it loops less in long
 greedy answers, and it cuts fewer tool replies at 1,024 tokens. In the agent task, it decides without looking. On
-maths benchmarks where the model rarely stops, stopping sooner is the whole gain. In a task whose point is to look
-before answering, stopping sooner skips the work. This is our reading of the measurements. We did not test the
-mechanism directly.</p>
+maths benchmarks where the model rarely stops, stopping sooner is most of the gain. In a task whose point is to look
+before answering, stopping sooner skips the work. This is our reading. Whether loops, tool calls and perplexity move
+together because of one mechanism, or several that this direction happens to touch, is not settled; the direction came
+from four hand-written pairs whose length and wording were not balanced.</p>
+
+<h2 id="review">What the review changed</h2>
+<p>GPT-6 Astra reviewed this part as a strict reviewer and reproduced most numbers independently (the byte counts, the
+benchmark arithmetic, the tool and perplexity figures). Fable, the agent that ran the experiments, answered each point
+and took all of them. Besides the scorer:</p>
+<ul>
+  <li>"Each at its best" is now "looking across settings after the fact", with the selection caveat.</li>
+  <li>The tool-calling result leads with the measure named beforehand (exact match, p = 0.17), not with the stronger
+  one found after.</li>
+  <li>"Far outside run-to-run noise" for the agent task is withdrawn: the repeat was a replay with the same seed.</li>
+  <li>"No change" on short and long answers is now "no difference detected".</li>
+  <li>"The gain is termination" is now "most of the gain": under C2 the edit loses 8 problems the base solved.</li>
+  <li>The recovered direction is "an approximate factorisation", not a reconstruction.</li>
+</ul>
 
 <h2>What we did not check</h2>
 <ul>
-  <li>C1 and C2 ran 1 sample on 100 problems. C3 ran 4 samples on all 500.</li>
-  <li>The agent task ran once per model. The base run reproduced an earlier base run exactly, which is why we read
-  the gap as far larger than run-to-run noise.</li>
+  <li>C1 and C2 ran 1 sample on 200 problems. C3 ran 4 samples on all 500.</li>
+  <li>No answer was graded by hand. The grader is our own, checked against the authors' math-verify flags on answers
+  from their C1 runs; answer forms that appear only under C2 or C3 are not covered by that check.</li>
+  <li>The agent task ran once per model.</li>
   <li>The tool-calling sets are 3 of the usual 4 (xLAM is gated and was not downloaded).</li>
-  <li>We did not run a random-direction control on the 0.8B, so we cannot split the costs between "this direction" and
-  "any rank-one change of this size". Part 2 does run one.</li>
+  <li>The random controls for the 0.8B are in the teacher-forced screen only; none has been through generation.</li>
   <li>We read the 50-pass run's tool calls and files, not all 158 turns, and not the 10- and 25-pass runs.</li>
 </ul>
 
 <h2>Reproduce it</h2>
 <p>Everything in this part uses public files: the base model, the release, the authors' logs and MATH-500
 (<code>HuggingFaceH4/MATH-500</code>). The repository's README gives the steps for one RTX 3090. Generation times on
-that GPU: C3, 69 minutes (base) and 64 minutes (edited) for 2,000 answers; C2, 106 minutes (base) and 56 minutes (edited) for 100
-answers; C1, 24 and 14 minutes.</p>
+that GPU: C3, 69 minutes (base) and 64 minutes (edited) for 2,000 answers; C2, 199 minutes (base) and 109 minutes
+(edited) for 200 answers; C1, 42 and 28 minutes.</p>
 <p class="src">Times: <code>generation_seconds_rtx3090</code> in
 <a href="data/part1/math500_settings.csv">data/part1/math500_settings.csv</a>.</p>
 

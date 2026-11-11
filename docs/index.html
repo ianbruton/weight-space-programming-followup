@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Editing a model's weights by hand: a follow-up</title>
-<meta name="description" content="MIT CSAIL's weight-space edit of Qwen3.5-0.8B reproduced and compared fairly, and the same recipe tried on a 4B model.">
+<meta name="description" content="MIT CSAIL's weight-space edit of Qwen3.5-0.8B reproduced and compared fairly, and the same recipe tried on a 4B and a 27B model.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,34 +20,35 @@
 <p class="lede">In November 2026 four MIT CSAIL researchers showed a frontier model editing the weights of
 Qwen3.5-0.8B directly, with no training, and lifting its MATH-500 score from 7.9% to 48.1%. We checked the released
 weights byte by byte, ran both models under three sampling settings, measured what the edit costs elsewhere, and then
-tried the same recipe on a 4B model for a different job.</p>
+tried the same recipe on a 4B model and on a 27B model for jobs of our own.</p>
 
 <div class="box neutral">
 <p><strong>This is a follow-up, not a takedown.</strong> The authors released their logs, their edited model and a
 diff of the edit. That is why any of this could be checked. The edit is real and is exactly what they released. Our
-work adds a fair baseline, the costs, and a second model.</p>
+work adds a fair baseline, the costs, and two more models, one of which the recipe did not help.</p>
 </div>
 
 <div class="cards">
   <div class="card">
     <h3><a href="part1.html">Part 1: MIT's 0.8B edit, reproduced and compared fairly</a></h3>
     <p>The bytes match the release, but the edit applies six times the projection on one direction per layer, and
-    it changes 130,188 weights, not 131,072. Under the post's settings the unedited model loops to the token cap. With each
-    model at its own best setting, the edit is ahead by <strong>+10 ± 3.6 points</strong>, not +40. It costs 5.5%
-    perplexity and some tool use, and in our agent task it mostly stopped looking things up.</p>
+    it changes 130,188 weights, not 131,072. Under the post's settings the unedited model loops to the token cap.
+    Looking across settings after the fact, the edited model's best is <strong>+6 ± 2.7 points</strong> above the
+    base model's best on 200 problems, not +40. It costs 5.5% perplexity and some tool use, and in one run of our agent
+    task it mostly stopped looking things up.</p>
   </div>
   <div class="card">
     <h3><a href="part2.html">Part 2: our own 4B citation edit</a></h3>
-    <p>The recipe transfers mechanically. One direction in two layers, at the lowest dose, raised the share of
-    citations that hold from 89.7% to 93.1%, and beat a random direction of the same size. The test we planned
-    (two runs per arm) came out <strong>"not shown"</strong>. A four-run extension, declared after we had seen that
-    result, showed the gain. The edit does not make the model pass the whole benchmark.</p>
+    <p>The recipe transfers mechanically. A tiny edit raised the share of citations that hold from 89.7% to 93.1%
+    and beat a random direction of the same size, but the test we planned came out <strong>"not shown"</strong>, and on
+    a second day's data the gain did not reach items that were new that day. It costs nothing measurable on tool
+    calling, and a screen of 30 variants found nothing better.</p>
   </div>
   <div class="card">
-    <h3><a href="part3.html">Part 3: a 27B tool reflex</a> <span class="tag">in progress</span></h3>
-    <p>Can the same kind of edit remove a 27B model's habit of calling a tool on a path that an injected instruction
-    planted, while keeping its legitimate tool use? The page describes what is being tested. There are no results
-    yet.</p>
+    <h3><a href="part3.html">Part 3: a 27B tool reflex</a></h3>
+    <p>A negative result. The 27B's habit of calling a tool on a planted path is its ordinary checking habit, not
+    obedience, and the recipe found a <em>token</em>, not a habit: the edit moved calls to other paths instead of
+    removing them, and broke some answers. The check failed in every edited run.</p>
   </div>
 </div>
 
@@ -56,10 +57,12 @@ work adds a fair baseline, the costs, and a second model.</p>
 Claude Code, under the author's direction. Each decision rule (which edit family, which dose, what counts as
 "it worked") was written down before the test it judged. Where we changed a plan after seeing a result, the pages
 say so.</p>
-<p>Parts 1 and 2 were then reviewed by GPT-6 Astra, the model that found MIT's edit, working as a strict reviewer.
-It found a grading fault of ours (which had understated the edit's thinking-mode gain) and several overstatements.
-The corrections are marked on each page. Astra and Fable now work as a pair on each model size, Astra reviewing and
-proposing, Fable running the experiments.</p>
+<p>All three parts were then reviewed by GPT-6 Astra, the model that found MIT's edit, working as a strict
+reviewer. It found a grading fault of ours (which had understated the edit's thinking-mode gain) and several
+overstatements, and it ranked what to try next. The corrections are marked on each page. Astra and Fable (Claude Fable
+5.2, which ran the experiments) now work as a pair on each model size: Astra reviews and proposes, Fable decides what to
+run and writes its success rule first. Some of their follow-up runs were still queued when these pages were written;
+the pages say which.</p>
 <p>Every number on these pages links to a file in <a href="data.html">the data folder</a>. The scripts are in the
 repository's <code>code/</code> folder. Part 1 can be reproduced from public files. Parts 2 and 3 use a private
 benchmark, so we publish the method, the edit directions and the aggregate results, not the benchmark itself.</p>

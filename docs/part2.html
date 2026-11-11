@@ -19,23 +19,28 @@
 <p class="lede">We used Astra's recipe on Qwen3.5-4B for a failure it really has: citations that point to the wrong
 place. The recipe transferred mechanically. One direction, two layers and the lowest dose raised the share of
 citations that hold by about 3.5 points, and it beat a random direction of the same size. The statistics need careful
-reading. So does what the edit actually is.</p>
+reading. So does what the edit actually is. On a second day's data the gain did not reach the items that were new
+that day, and a screen of 30 variants found nothing better than the first edit.</p>
 
 <div class="box neutral">
 <p><strong>Reviewed by GPT-6 Astra (11 November).</strong> Astra recomputed every headline figure and re-checked all
-3,276 citations of the twelve fresh runs, and found no discrepancies. Its corrections, now applied on this page:</p>
+3,276 citations of the twelve fresh runs, and found no discrepancies. Its verdict: <em>a credible, modest improvement
+on this data; the declared success rule remains unmet; general improvement without regressions is not
+established.</em> Fable agreed with all fifteen points. The corrections are applied on this page:</p>
 <ul>
-  <li>The intervals below resample items, with each arm's runs pooled. They leave out run-to-run variation. Allowing
-  for it as well, Astra's sensitivity check gives edited − base of about <strong>−0.1 to +7.6 points</strong>
-  (held-out −1.4 to +11.9). The gain is likely, not settled.</li>
-  <li>The held-out items were kept out of building the direction, but they did inform some exploratory choices (which
-  token spans to try). They are not an untouched test set.</li>
-  <li>The control is one random edit, repeated over four seeds. The claim is that the edit beat this control, not that
-  any random edit does nothing.</li>
-  <li>That we found no "this citation will miss" direction does not show that none exists.</li>
+  <li>The intervals below resample items, with each arm's runs pooled. They leave out run-to-run variation. With the
+  runs resampled too, edited − base is about <strong>0 to +7.5 points</strong> (held-out −1.3 to +11.7). The gain is
+  at the edge of zero once run-to-run variation is counted.</li>
+  <li>The held-out items were not used to fit the direction or to choose the family and the dose, but they were used
+  earlier, in an exploratory survey. They are not untouched test data.</li>
+  <li>The control is one random edit, repeated over four seeds. The edit beat this control; the control itself was
+  not distinguishable from the base (−1.2, −3.6 to +1.0).</li>
+  <li>"Held" means the quote is found where the citation says it is. Whether the quote supports the decision was not
+  graded.</li>
+  <li>We did not find a "this citation will miss" direction with our probes. That does not show none exists.</li>
 </ul>
-<p>A replication with fresh seeds, a second day's data and a tool-calling check is running, together with a round of
-improvements in response to the review.</p>
+<p>What happened next is in <a href="#round2">Round 2</a>: a second day's data, a tool-calling check, and a screen of
+variants with five random controls.</p>
 </div>
 
 <div class="box">
@@ -47,8 +52,10 @@ improvements in response to the review.</p>
   <strong>"not shown"</strong>. We then declared two more runs per arm, fixed their number, and ran them. The
   four-run result above comes from that extension, decided <em>after</em> we saw the first.</li>
   <li>The edit does not make the model pass the whole benchmark more often: 2 of 4 runs, the same as the base.</li>
-  <li>It is not a "be careful" switch. It is a small re-weighting of words in the last two layers. That direction also
-  carries the end-of-answer token, so higher doses produce answers that never end.</li>
+  <li>It is not a "be careful" switch. It is a small re-weighting of words in the last layers; a later screen found
+  that one layer (31) carries all of it. Higher doses produce answers that never end.</li>
+  <li>On a second day's data the edit held no more citations than the base on the 18 items that were new that day
+  (−1.2 points). It did not raise tool-calling errors or perplexity.</li>
 </ul>
 </div>
 
@@ -74,7 +81,7 @@ sentence sits in <code>text</code>). The 4B's misses are wrong paths, not badly 
 That gave 32 held-out items and 38 practice items. Directions were built on practice items only.</p>
 
 <h2>Is there a "this citation will miss" direction?</h2>
-<p>We found none. We read the base model's hidden states over every citation and built difference-of-means directions on
+<p>We did not find one with these probes. We read the base model's hidden states over every citation and built difference-of-means directions on
 practice items. Then we measured how well each separates misses from hits on held-out items (AUC; 0.5 is chance):</p>
 <div class="table-wrap"><table>
 <tr><th>Tokens averaged</th><th class="n">All misses − all held, held-out AUC over layers 1–32</th><th class="n">Pairs inside one answer</th></tr>
@@ -237,10 +244,11 @@ and <a href="data/part2/bootstrap.csv">data/part2/bootstrap.csv</a> (intervals).
 </ul>
 
 <div class="box neutral">
-<p><strong>How we read it.</strong> The citation effect is real and modest: about 3.5 points, a third of the misses.
-It reaches items the direction was not built from, and it beat a random direction of the same size. But the planned
-test did not show it, and allowing for run-to-run variation its interval touches zero. The evidence for it comes from an extension that we chose after seeing that result. And the edit
-does not make the 4B pass the benchmark reliably.</p>
+<p><strong>How we read it.</strong> The success rule we wrote before the test was not met, neither in the planned
+test nor after an extension decided after seeing it. What the twelve runs support is an exploratory estimate: about
+3.5 points, a third of the misses, against a base that holds about 90%. With run-to-run variation counted, its interval
+reaches zero. It beat one random direction of the same size. And the edit does not make the 4B pass the benchmark
+reliably. Round 2 (below) tested it on a second day's data.</p>
 </div>
 
 <h2>What it costs</h2>
@@ -252,17 +260,104 @@ does not make the 4B pass the benchmark reliably.</p>
 <p class="src">5 private text files, 86,588 tokens scored. Data:
 <a href="data/part2/perplexity_by_dose.csv">data/part2/perplexity_by_dose.csv</a>.</p>
 <p>The edited direction costs four to eight times what a random direction of the same size costs. At dose 1 the cost
-is small: +0.40% perplexity, and six short-answer prompts gave the same answers token for token from the base, the
-edit and the control. In the benchmark, answer lengths matched the base except for the answers that never ended.</p>
+is small: +0.40% perplexity on these five files, and six short-answer prompts gave the same answers token for token
+from the base, the edit and the control. A larger check in Round 2 (900 tool-calling items and 47 text files, the
+method of Part 1) found no change at dose 1. A higher rate of answers that never end is neither shown nor
+excluded.</p>
 
 <h2>What the edit is, and what it is not</h2>
-<p>It is not a "quote exactly" or "be careful" direction. We found none in the 4B's states for this failure. It is a
-small lexical re-weighting in the last two MLPs (165 columns each, under 1% of each tensor's norm). For a quote of
-the item's sentence, it makes the 4B write paths that hold, most clearly <code>text</code> instead of a bare
-<code>facts</code>. The same direction carries the end-of-answer token. That is why answers stop ending at higher
-doses.</p>
-<p><strong>The obvious rival is one line in the prompt</strong>, such as "a quote of the item's sentence has the path
-<code>text</code>". We did not test it. It is the first thing to try before any weight edit of this kind.</p>
+<p>It is not a "quote exactly" or "be careful" direction; we did not find one in the 4B's states for this failure. It
+is a small lexical re-weighting in the last MLPs (165 columns, under 1% of each tensor's norm). For a quote of the
+item's sentence, it makes the 4B write paths that hold, most clearly <code>text</code> instead of a bare
+<code>facts</code>. It is not a blind push towards <code>text</code>: where <code>text</code> would be the wrong path,
+the edited model holds 95.1% of citations against the base's 93.4% (+1.7, −0.4 to +4.2). Read through the output
+layer, the end-of-answer token sits on the side the edit removes, which is consistent with answers that stop ending
+at higher doses; that mechanism was not isolated.</p>
+<p class="src">Data: <a href="data/part2/round2.json">data/part2/round2.json</a>.</p>
+
+<h2 id="round2">Round 2: the review, a screen of variants, and a replication</h2>
+<p>After the review, Fable ran one improvement round with its rules written first, and a separate replication with
+its own rules ran beside it.</p>
+
+<h3>More measures on the same twelve runs</h3>
+<ul>
+  <li><strong>Clean answers</strong> (valid, and every citation holds): base 72.1%, edited 79.3%, control 70.0% of
+  280. Edited − base +7.1 points (0.0 to +14.3; −2.5 to +16.1 with runs resampled).</li>
+  <li><strong>Coverage:</strong> citations per valid answer fell 2.1% (−9.5% to +6.0%). So the gain is not bought by
+  citing visibly less, but a loss of up to a tenth of the citations is not excluded.</li>
+  <li>With the 22 <strong>kinds of item</strong> as the unit instead of the 70 items: edited − base +3.5 (+0.5 to
+  +6.6). The edited model does better in 10 kinds, worse in 6, the same in 6. The effect is not carried by one kind,
+  but all of this is one day's layouts.</li>
+</ul>
+
+<h3>A screen of variants: nothing beats the first edit</h3>
+<p>Following Astra's ranking, Fable screened 30 variants of the edit cheaply (teacher-forced, the same practice
+answers as before): every combination of doses 0, 0.5, 1 and 1.5 in the two layers, 64 and 330 columns, columns split
+by the sign of their write, and a direction made orthogonal to the end-of-answer token. This time there were
+<strong>five independently drawn random controls</strong>. The rule, written first, sent a variant to the real
+benchmark only if it predicted about twice the first edit's gain.</p>
+<div class="table-wrap"><table>
+<tr><th>Edit (layers 29 / 31 dose)</th><th class="n">Fork score S (nats ± se)</th><th class="n">Proxy gain</th><th class="n">Held paths' log-prob change</th></tr>
+<tr class="hl"><td>first edit, 1 / 1</td><td class="n">+0.550 ± 0.049</td><td class="n">+0.0122</td><td class="n">−0.022</td></tr>
+<tr><td>layer 31 alone, 0 / 1</td><td class="n">+0.558 ± 0.044</td><td class="n">+0.0117</td><td class="n">−0.020</td></tr>
+<tr><td>layer 29 alone, 1 / 0</td><td class="n">−0.000 ± 0.017</td><td class="n">+0.0011</td><td class="n">+0.004</td></tr>
+<tr><td>330 columns, 1 / 1</td><td class="n">+0.662 ± 0.056</td><td class="n">+0.0122</td><td class="n">−0.030</td></tr>
+<tr><td>best variant ("pos" columns, dose 3)</td><td class="n">+0.546 ± 0.049</td><td class="n">+0.0149</td><td class="n">−0.006</td></tr>
+<tr><td>five random controls, dose 1</td><td class="n">−0.133 to +0.063</td><td class="n">−0.0071 to +0.0012</td><td class="n">−0.021 to +0.010</td></tr>
+</table></div>
+<p class="src">Data: <a href="data/part2/variant_screen_practice.csv">data/part2/variant_screen_practice.csv</a>,
+<a href="data/part2/variant_screen_heldout.csv">variant_screen_heldout.csv</a> and
+<a href="data/part2/round2.json">round2.json</a>.</p>
+<ul>
+  <li><strong>No variant passed the rule</strong> (needed +0.0243; the best reached +0.0149). The first edit at dose 1
+  stays the best one.</li>
+  <li><strong>Layer 31 carries all of it.</strong> Layer 29 alone is inside the controls' range. In effect the edit
+  is a one-layer change of 0.93% of one tensor.</li>
+  <li>The first edit's fork score is nine times the largest of the five controls'.</li>
+  <li>The probability of the end-of-answer token after a finished answer does not move under any variant. So the
+  edit does not touch stopping at the natural end of an answer; the answers that never ended were lists that kept
+  growing, which this measure does not see.</li>
+  <li><strong>On held-out forks the effect is a fifth as large</strong> (S +0.111 ± 0.070 against +0.550 ± 0.049 on
+  practice forks). The correction transfers weakly to items the direction was not fitted on. That fits Astra's rival
+  readings (a layout-specific preference; a change in <em>what</em> is cited) better than "better reference
+  resolution".</li>
+</ul>
+
+<h3>A second day's data, and a tool-calling check</h3>
+<p>The same edit, unchanged, on a second day's real data (67 items, 18 of them new that day; two runs per arm), with
+the rule written before the runs: the edit must beat both base and control on the 40 items it was not built
+from.</p>
+<div class="table-wrap"><table>
+<tr><th>Items</th><th class="n">Base</th><th class="n">Edited</th><th class="n">Control</th><th class="n">Edited − base</th><th class="n">Edited − control</th></tr>
+<tr class="hl"><td>not used to build the edit, 40 (the test)</td><td class="n">84.6%</td><td class="n">88.7%</td><td class="n">82.7%</td><td class="n">+4.1 (−2.0 to +9.6)</td><td class="n">+6.0 (+0.4 to +10.9)</td></tr>
+<tr><td>… new that day, 18</td><td class="n">86.1%</td><td class="n">84.9%</td><td class="n">82.9%</td><td class="n">−1.2 (−11.9 to +8.4)</td><td class="n">+2.0 (−5.8 to +8.9)</td></tr>
+<tr><td>… held out on the first day, 22</td><td class="n">83.9%</td><td class="n">90.7%</td><td class="n">82.6%</td><td class="n">+6.8 (−0.3 to +13.0)</td><td class="n">+8.1 (+0.7 to +14.3)</td></tr>
+<tr><td>used to build the edit, 27</td><td class="n">89.8%</td><td class="n">88.1%</td><td class="n">87.1%</td><td class="n">−1.6 (−11.1 to +6.9)</td><td class="n">+1.0 (−9.5 to +11.2)</td></tr>
+<tr><td>all 67</td><td class="n">86.7%</td><td class="n">88.5%</td><td class="n">84.4%</td><td class="n">+1.8 (−3.7 to +6.6)</td><td class="n">+4.1 (−1.6 to +9.0)</td></tr>
+</table></div>
+<p class="src">Share of citations that hold, two runs per arm pooled; points with 95% intervals (bootstrap over
+items). Counts: <a href="data/part2/round2.json">data/part2/round2.json</a>.</p>
+<ul>
+  <li><strong>By the rule: "same direction, not shown".</strong> Against the base the interval includes zero.</li>
+  <li><strong>The gain is not general.</strong> On the 18 items that did not exist on the first day, the edited model
+  held no more citations than the base. All of the gain on unseen items comes from the 22 that were held out on the
+  first day.</li>
+  <li>The edit still does its narrow thing: wrong-path misses fall from 63 (base) and 56 (control) to 34. But other
+  misses rise, so all misses go from 73 (base) to 61, against 84 for the control.</li>
+  <li><strong>Tool calling and perplexity, the method of Part 1:</strong> on 900 tool-calling items the edited model
+  made a parsable call on 890, the base on 891; exact matches 677 against 678 (p = 1.0), and 852 replies were the
+  same text, word for word. Perplexity on the 47 files: +0.005% (−0.16% to +0.13%). For comparison, MIT's 0.8B edit
+  lost 25 parsable calls and cost 5.5% under the same method.</li>
+</ul>
+
+<h3>Still running</h3>
+<ul>
+  <li>Four more runs per arm on the first day's data (the replication's first test) were queued, not run, when this
+  page was written.</li>
+  <li><strong>The obvious rival, one paragraph in the prompt</strong> that asks the model to match each quote to the
+  path it is actually at, is being tested against the edit: base and edited model crossed with the original and the
+  amended prompt, on both days' data. It was queued, not run, when this page was written.</li>
+</ul>
 
 <h2>Cost, against Astra's</h2>
 <p>The editor here was a Claude agent (Fable 5.2 in Claude Code) with its own scripts. It read the model's internals
@@ -274,17 +369,17 @@ last. Most of the GPU time went to benchmark runs, not to finding the edit. Astr
 
 <h2>What we did not check</h2>
 <ul>
-  <li>One prompt set and one sampling setting (temperature 0.3). One random control direction.</li>
-  <li>The direction came from 14 practice answers in two runs. No other column counts or layers were tried for F1.</li>
-  <li>Doses 2–6 went through the 24-item screen only. F2–F4 went through the teacher-forced screen only.</li>
+  <li>One prompt set and one sampling setting (temperature 0.3). In the full tests, one random control direction
+  (the screen in Round 2 had five).</li>
+  <li>The direction came from 14 practice answers in two runs.</li>
+  <li>Doses 2–6 went through the 24-item screen only. F2–F4 and the Round 2 variants went through the teacher-forced
+  screen only.</li>
   <li>The edit was served in bf16 from safetensors. No quantised copy was checked.</li>
-  <li>The regression check is small: five files and 18 prompts. There was no tool-calling set and no thinking-mode
-  run.</li>
-  <li>The bootstrap treats items as the unit and pools each arm's runs. It does not model run-to-run variation
-  separately.</li>
+  <li>No thinking-mode run. Whether quotes support the decisions was not graded.</li>
+  <li>The tools read live repositories, so the tool context was not frozen between runs.</li>
 </ul>
 
-<p><a href="part3.html">Next: Part 3, a 27B tool reflex (in progress) →</a></p>
+<p><a href="part3.html">Next: Part 3, a 27B tool reflex →</a></p>
 </main>
 <footer class="site"><div>The recipe is MIT CSAIL's (Takehi, Teoh, Zhang, Khattab). The benchmark is private; its
 aggregates are in <a href="data.html">the data files</a>.</div></footer>
