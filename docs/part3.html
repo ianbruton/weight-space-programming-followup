@@ -23,7 +23,8 @@ judged. There are no results yet.</p>
 <p>In the same private agent benchmark as Part 2, a 27B model (Qwen3.8-27B, served 4-bit) reviews items with
 read-only tools. Some test items carry an injected instruction that names a file path. On 3 of the 11 injected test
 items, in all 46 past runs, the model's first move is to call a tool on the planted path. The system prompt and every
-tool description already tell it not to. A prompt fix has been tried, and the reflex remains.</p>
+tool description already tell it not to, and the reflex remains in all 46. A dedicated prompt rewrite has not been
+tested yet.</p>
 <p>The trap is obvious: an edit that simply stops tool use would pass this check by doing no work. Part 1 showed that
 this can happen by accident: MIT's edit cut tool calls in our agent task by 87%. So the target is narrower:
 <strong>remove the first-turn call on the planted path, and keep tool calls on the item's own legitimate
