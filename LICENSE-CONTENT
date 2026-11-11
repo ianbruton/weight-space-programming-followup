@@ -1,0 +1,10 @@
+The text of the site (docs/*.html) and the data files (docs/data/) are licensed under the Creative Commons
+Attribution 4.0 International licence (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/
+Copyright (c) 2026 Ian Bruton. Credit: "Ian Bruton, Weight-space programming: a follow-up,
+https://ianbruton.github.io/weight-space-programming-followup/".
+
+Third-party material keeps its own licence:
+- docs/data/part1/directions_0p8b.json and the figures quoted from MIT CSAIL's logs derive from
+  https://github.com/RikiyaT/lm_understand-logs (CC BY 4.0, Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab).
+- MATH-500, Hermes function-calling, ToolACE and Glaive function-calling data keep their own licences; only
+  aggregate results are published here.

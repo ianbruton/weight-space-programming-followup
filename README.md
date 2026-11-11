@@ -91,6 +91,11 @@ their results as aggregates.
 - **No copy of MIT's code or logs.** They are linked. Their logs are CC BY 4.0 and their scripts MIT; the numbers we
   quote from them are attributed on each page.
 
+## Licence
+
+Code (`code/`): MIT, see `LICENSE`. The site's text and the data files (`docs/`): CC BY 4.0, see `LICENSE-CONTENT`.
+Third-party material keeps its own licence (MIT CSAIL's logs CC BY 4.0; the datasets theirs).
+
 ## Credits
 
 - Rikiya Takehi, Jayden Teoh, Alex Zhang and Omar Khattab (MIT CSAIL): the post, the edit, the
