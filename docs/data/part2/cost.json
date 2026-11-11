@@ -1,0 +1,32 @@
+{
+ "source_note": "from our job records: start and end of each GPU job",
+ "editor": "Claude (Fable 5.2) in Claude Code, its own scripts, one RTX 3090",
+ "gpu_jobs": [
+  {
+   "what": "teacher-forced read",
+   "minutes": 7.1
+  },
+  {
+   "what": "base screen + teacher-forced dose screen",
+   "minutes": 49.3
+  },
+  {
+   "what": "generation dose screen (13 runs)",
+   "minutes": 66.9
+  },
+  {
+   "what": "full benchmark, 6 runs + regression check",
+   "minutes": 86.6
+  },
+  {
+   "what": "extension, 6 runs",
+   "minutes": 71.2
+  }
+ ],
+ "gpu_hours_total": 4.69,
+ "wall_clock_hours_first_to_last_entry": 12.75,
+ "failed_jobs": [
+  "out of memory in 12 s (fixed and resubmitted)",
+  "refused to start by its own time-window guard"
+ ]
+}

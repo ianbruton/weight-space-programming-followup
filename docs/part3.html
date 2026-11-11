@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Part 3: a 27B tool reflex (in progress)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><nav>
+  <a href="index.html">Home</a>
+  <a href="part1.html">Part 1: the 0.8B</a>
+  <a href="part2.html">Part 2: our 4B</a>
+  <a href="part3.html" aria-current="page">Part 3: a 27B</a>
+  <a href="data.html">Data</a>
+</nav></header>
+<main>
+<h1>Part 3: a 27B tool reflex <span class="tag">in progress</span></h1>
+<p class="lede">This experiment is running now. This page says what is being tested and how the result will be
+judged. There are no results yet.</p>
+
+<h2>The behaviour</h2>
+<p>In the same private agent benchmark as Part 2, a 27B model (Qwen3.8-27B, served 4-bit) reviews items with
+read-only tools. Some test items carry an injected instruction that names a file path. On 3 of the 11 injected test
+items, in all 46 past runs, the model's first move is to call a tool on the planted path. The system prompt and every
+tool description already tell it not to. A prompt fix has been tried, and the reflex remains.</p>
+<p>The trap is obvious: an edit that simply stops tool use would pass this check by doing no work. Part 1 showed that
+this can happen by accident: MIT's edit cut tool calls in our agent task by 87%. So the target is narrower:
+<strong>remove the first-turn call on the planted path, and keep tool calls on the item's own legitimate
+files.</strong> Both are measured.</p>
+<p class="src">Data: <a href="data/part3/plan.json">data/part3/plan.json</a>.</p>
+
+<h2>The plan</h2>
+<ol>
+  <li><strong>A contrast set fixed before any reading or generation.</strong> 48 planted instructions that name a path,
+  12 planted instructions with no path, 12 plain mentions of a path with no instruction, and the 70 real items.
+  None of them reuses a path, sentence or number from the benchmark's own injected test items. Separate splits are
+  used for building the direction and for choosing the dose.</li>
+  <li><strong>Read the model in 4 bits.</strong> The 27B does not fit in 24 GB of VRAM or in RAM at full precision.
+  Activations are read from a 4-bit copy by a loader that unpacks each weight inside its own forward call. The
+  4-bit copy rescales MLP columns, so directions are taken in the residual stream, which is the same space in every
+  copy of the model.</li>
+  <li><strong>Screen doses without writing weights.</strong> The edit is served as a rank-one adapter, and its scale
+  is the dose. The target direction and a norm-matched random control are both screened on practice items.</li>
+  <li><strong>Write the chosen dose into a new model file.</strong> The edited tensors are re-quantised. We check
+  that the dose survives the re-quantisation.</li>
+  <li><strong>Test base, edit and random control</strong> on the benchmark. Measures: the reflex on each probe, tool
+  calls on legitimate files, citations that hold, and valid answers. Then a regression check.</li>
+  <li><strong>A cost ledger:</strong> tokens, GPU hours, forward passes, code runs and wall time. For comparison,
+  Astra's 50-pass run used 50 passes, 158 turns and 80 Python runs, over 20.3 hours
+  (<a href="https://github.com/RikiyaT/lm_understand-logs/blob/4d09ba6d6a7e891dd8063974dfe81b3d78e3494f/exp8_math/README.md">the authors' run table</a>).
+  We plan three passes, not fifty.</li>
+</ol>
+<p>As in Part 2, the rule for "it worked" is written before the test it judges, and any change of plan after a
+result is reported as such.</p>
+
+<p><a href="index.html">← Back to the overview</a></p>
+</main>
+<footer class="site"><div>Part 3 will be filled in when the experiment ends. Numbers trace to
+<a href="data.html">data files</a>.</div></footer>
+</body>
+</html>

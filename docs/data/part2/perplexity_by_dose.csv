@@ -1,0 +1,14 @@
+arm,dose,perplexity,change_pct
+base,0,11.062,0.0
+control,1,11.072,0.09
+control,2,11.085,0.21
+control,3,11.104,0.38
+control,4,11.129,0.6
+control,5,11.157,0.86
+control,6,11.193,1.18
+target,1,11.106,0.4
+target,2,11.201,1.26
+target,3,11.347,2.58
+target,4,11.551,4.42
+target,5,11.813,6.79
+target,6,12.142,9.76

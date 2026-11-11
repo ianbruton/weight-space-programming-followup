@@ -1,0 +1,15 @@
+arm,dose,seed,citations_held,citations_made,path_wrong_misses,valid_answers_of_24,mean_final_answer_tokens
+base,0,0,63,71,4,24,385
+base,0,1,66,83,14,23,388
+target,1,0,69,74,3,24,391
+target,2,0,71,75,2,23,427
+target,3,0,60,65,3,22,388
+target,4,0,60,64,1,20,633
+target,5,0,41,46,3,16,1268
+target,6,0,37,40,3,16,1703
+control,1,0,67,79,9,24,353
+control,2,0,63,74,9,23,623
+control,3,0,76,92,15,24,394
+control,4,0,62,73,8,24,400
+control,5,0,67,75,8,24,389
+control,6,0,71,82,8,23,396

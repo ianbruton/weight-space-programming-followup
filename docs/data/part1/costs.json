@@ -1,0 +1,303 @@
+{
+ "perplexity": {
+  "texts": "47 private Markdown files written in 2026 (after both models' training data), 329,935 scored tokens, windows of 4,096; vLLM prompt_logprobs",
+  "base": 7.466,
+  "edited": 7.873,
+  "ratio": 1.0546,
+  "ratio_ci95": [
+   1.049,
+   1.0621
+  ],
+  "files_worse_after_edit": 47,
+  "files": 47,
+  "sign_test_p": 1.4210854715202004e-14,
+  "by_kind": {
+   "project documentation (5 files)": {
+    "tokens": 86610,
+    "base": 12.02,
+    "edited": 12.49
+   },
+   "research notes (42 files)": {
+    "tokens": 243325,
+    "base": 6.3,
+    "edited": 6.68
+   }
+  }
+ },
+ "tool_calling": {
+  "what": "300 items each from Hermes function-calling, ToolACE and Glaive v2 (seed 20261110), first user turn with its tools, thinking off, greedy, up to 1,024 tokens. any = a parsable call; names = right function names; exact = names and arguments; cut = reply reached 1,024 tokens. paired = McNemar exact test.",
+  "hermes": {
+   "n": 300,
+   "any": {
+    "base": 285,
+    "edited": 279,
+    "paired": {
+     "base_only": 8,
+     "edited_only": 2,
+     "p": 0.109375
+    }
+   },
+   "names": {
+    "base": 208,
+    "edited": 207,
+    "paired": {
+     "base_only": 15,
+     "edited_only": 14,
+     "p": 1.0
+    }
+   },
+   "exact": {
+    "base": 145,
+    "edited": 141,
+    "paired": {
+     "base_only": 13,
+     "edited_only": 9,
+     "p": 0.5234670639038086
+    }
+   },
+   "cut": {
+    "base": 13,
+    "edited": 8,
+    "paired": {
+     "base_only": 6,
+     "edited_only": 1,
+     "p": 0.125
+    }
+   }
+  },
+  "toolace": {
+   "n": 300,
+   "any": {
+    "base": 263,
+    "edited": 253,
+    "paired": {
+     "base_only": 15,
+     "edited_only": 5,
+     "p": 0.04138946533203125
+    }
+   },
+   "names": {
+    "base": 216,
+    "edited": 206,
+    "paired": {
+     "base_only": 17,
+     "edited_only": 7,
+     "p": 0.06391465663909912
+    }
+   },
+   "exact": {
+    "base": 147,
+    "edited": 144,
+    "paired": {
+     "base_only": 21,
+     "edited_only": 18,
+     "p": 0.7492586247608415
+    }
+   },
+   "cut": {
+    "base": 3,
+    "edited": 1,
+    "paired": {
+     "base_only": 2,
+     "edited_only": 0,
+     "p": 0.5
+    }
+   }
+  },
+  "glaive": {
+   "n": 300,
+   "any": {
+    "base": 289,
+    "edited": 280,
+    "paired": {
+     "base_only": 9,
+     "edited_only": 0,
+     "p": 0.00390625
+    }
+   },
+   "names": {
+    "base": 289,
+    "edited": 280,
+    "paired": {
+     "base_only": 9,
+     "edited_only": 0,
+     "p": 0.00390625
+    }
+   },
+   "exact": {
+    "base": 251,
+    "edited": 245,
+    "paired": {
+     "base_only": 11,
+     "edited_only": 5,
+     "p": 0.210113525390625
+    }
+   },
+   "cut": {
+    "base": 2,
+    "edited": 0,
+    "paired": {
+     "base_only": 2,
+     "edited_only": 0,
+     "p": 0.5
+    }
+   }
+  },
+  "all": {
+   "n": 900,
+   "any": {
+    "base": 837,
+    "edited": 812,
+    "paired": {
+     "base_only": 32,
+     "edited_only": 7,
+     "p": 7.025478407740593e-05
+    }
+   },
+   "names": {
+    "base": 713,
+    "edited": 693,
+    "paired": {
+     "base_only": 41,
+     "edited_only": 21,
+     "p": 0.015134080997447081
+    }
+   },
+   "exact": {
+    "base": 543,
+    "edited": 530,
+    "paired": {
+     "base_only": 45,
+     "edited_only": 32,
+     "p": 0.17106097355391156
+    }
+   },
+   "cut": {
+    "base": 18,
+    "edited": 9,
+    "paired": {
+     "base_only": 10,
+     "edited_only": 1,
+     "p": 0.01171875
+    }
+   }
+  }
+ },
+ "short_answers": {
+  "what": "100 ten-option questions, thinking off, greedy",
+  "n": 100,
+  "base": 22,
+  "edited": 23,
+  "unanswered": {
+   "base": 3,
+   "edited": 3
+  },
+  "paired": {
+   "base_only": 0,
+   "edited_only": 1,
+   "p": 1.0
+  }
+ },
+ "long_answers_greedy": {
+  "base": {
+   "mean_tokens": 2584.4666666666667,
+   "median_tokens": 2079.0,
+   "min_tokens": 1138,
+   "mean_words": 2071.766666666667,
+   "under_800_words": 0,
+   "cut": 9,
+   "refusal": 0,
+   "mean_rep8": 0.2389409512224607,
+   "max_rep8": 0.7656524283206554
+  },
+  "edited": {
+   "mean_tokens": 2012.4666666666667,
+   "median_tokens": 2029.5,
+   "min_tokens": 1298,
+   "mean_words": 1614.4666666666667,
+   "under_800_words": 0,
+   "cut": 1,
+   "refusal": 0,
+   "mean_rep8": 0.05915054154026219,
+   "max_rep8": 0.6167375886524823
+  },
+  "paired": {
+   "edited_shorter": 17,
+   "edited_longer": 12,
+   "sign_p": 0.45825831964612007,
+   "mean_diff": -572,
+   "mean_diff_ci95": [
+    -953.2333333333333,
+    -207.6
+   ]
+  }
+ },
+ "long_answers_card_sampling": {
+  "base": {
+   "mean_tokens": 2311.8333333333335,
+   "median_tokens": 2395.0,
+   "min_tokens": 1239,
+   "mean_words": 1845.2,
+   "under_800_words": 0,
+   "cut": 0,
+   "refusal": 0,
+   "mean_rep8": 0.0,
+   "max_rep8": 0.0
+  },
+  "edited": {
+   "mean_tokens": 2232.5666666666666,
+   "median_tokens": 2167.5,
+   "min_tokens": 1227,
+   "mean_words": 1764.9333333333334,
+   "under_800_words": 0,
+   "cut": 1,
+   "refusal": 0,
+   "mean_rep8": 0.0,
+   "max_rep8": 0.0
+  },
+  "paired": {
+   "edited_shorter": 16,
+   "edited_longer": 14,
+   "sign_p": 0.855535551905632,
+   "mean_diff": -79.26666666666667,
+   "mean_diff_ci95": [
+    -340.6666666666667,
+    192
+   ]
+  }
+ },
+ "agent_job": {
+  "what": "A private agent benchmark: a review agent decides 70 items plus 11 injected test items, may call read-only tools, and must back each decision with cited evidence. One run per model.",
+  "items_checked_with_a_tool_of_81": {
+   "base": 43,
+   "edited": 7
+  },
+  "tool_calls_made": {
+   "base": 275,
+   "edited": 37
+  },
+  "valid_decisions_of_70": {
+   "base": 66,
+   "edited": 55
+  },
+  "citations": {
+   "base": {
+    "held": 14,
+    "made": 239
+   },
+   "edited": {
+    "held": 15,
+    "made": 140
+   }
+  },
+  "output_tokens": {
+   "base": 100295,
+   "edited": 44523
+  },
+  "speculative_decoding_draft_acceptance_pct": {
+   "base": 92.8,
+   "edited": 81.1
+  },
+  "source_note": "transcribed from our study report (private run folders); aggregates only"
+ }
+}

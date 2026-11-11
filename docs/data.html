@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data files</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><nav>
+  <a href="index.html">Home</a>
+  <a href="part1.html">Part 1: the 0.8B</a>
+  <a href="part2.html">Part 2: our 4B</a>
+  <a href="part3.html">Part 3: a 27B</a>
+  <a href="data.html" aria-current="page">Data</a>
+</nav></header>
+<main>
+<h1>Data files</h1>
+<p class="lede">Aggregates only: no model weights, no model outputs from the private benchmark, no benchmark items.
+The edit directions are published as vectors, together with the formula that applies them.</p>
+
+<h2>Part 1: the 0.8B</h2>
+<div class="table-wrap"><table>
+<tr><th>File</th><th>What</th></tr>
+<tr><td><a href="data/part1/bytes.json">bytes.json</a></td><td>The byte comparison: tensors that differ, counts, hashes, the rank-one fit, the dose per column, the rebuild.</td></tr>
+<tr><td><a href="data/part1/directions_0p8b.json">directions_0p8b.json</a></td><td>The two recovered directions <code>u</code> (1,024 numbers each) and the 64 edited columns per layer. Derived from MIT CSAIL's release (CC BY 4.0).</td></tr>
+<tr><td><a href="data/part1/released_regrade.json">released_regrade.json</a></td><td>The released MATH-500 texts re-graded on CPU, and the authors' flags re-summed.</td></tr>
+<tr><td><a href="data/part1/settings.json">settings.json</a></td><td>The three sampling settings, seeds, engine and prompt.</td></tr>
+<tr><td><a href="data/part1/math500_settings.csv">math500_settings.csv</a></td><td>Six runs: accuracy, standard error, share at the token cap, tokens, time on one RTX 3090.</td></tr>
+<tr><td><a href="data/part1/math500_paired.csv">math500_paired.csv</a></td><td>Paired differences, edited − base, per setting.</td></tr>
+<tr><td><a href="data/part1/math500_same100.csv">math500_same100.csv</a>, <a href="data/part1/math500_same100_pairs.csv">math500_same100_pairs.csv</a></td><td>All six arms on the same 100 problems, and the cross-setting comparisons.</td></tr>
+<tr><td><a href="data/part1/order100.txt">order100.txt</a></td><td>The 100 MATH-500 problem ids used for C1 and C2.</td></tr>
+<tr><td><a href="data/part1/mit_reported_ten_benchmarks.csv">mit_reported_ten_benchmarks.csv</a></td><td>The authors' ten benchmarks, read from their logs (not re-run).</td></tr>
+<tr><td><a href="data/part1/costs.json">costs.json</a></td><td>Perplexity, tool calling, short and long answers, and the agent task (aggregates).</td></tr>
+</table></div>
+
+<h2>Part 2: our 4B</h2>
+<div class="table-wrap"><table>
+<tr><th>File</th><th>What</th></tr>
+<tr><td><a href="data/part2/base_4b_math_practice.json">base_4b_math_practice.json</a></td><td>Does the 4B loop? 128 practice answers under the post's settings.</td></tr>
+<tr><td><a href="data/part2/contrast_set_and_survey.json">contrast_set_and_survey.json</a></td><td>Counts of the contrast set, the split, the direction survey, and summary figures quoted on the page.</td></tr>
+<tr><td><a href="data/part2/teacher_forced_screen.csv">teacher_forced_screen.csv</a></td><td>The four families at doses 1–6 and their controls.</td></tr>
+<tr><td><a href="data/part2/direction_4b_F1.json">direction_4b_F1.json</a></td><td>The chosen edit: per layer <code>u</code> (2,560 numbers) and 165 columns, plus the random control.</td></tr>
+<tr><td><a href="data/part2/dose_screen.csv">dose_screen.csv</a></td><td>The 24-item screen: one run per dose and arm.</td></tr>
+<tr><td><a href="data/part2/full_benchmark_runs.csv">full_benchmark_runs.csv</a></td><td>Every full run: citations held (all, practice, held-out), misses by kind, valid answers, whole-benchmark pass.</td></tr>
+<tr><td><a href="data/part2/bootstrap.csv">bootstrap.csv</a></td><td>Pooled differences and 95% intervals: the planned test, the extension, and the extension alone.</td></tr>
+<tr><td><a href="data/part2/perplexity_by_dose.csv">perplexity_by_dose.csv</a>, <a href="data/part2/perplexity_note.json">perplexity_note.json</a></td><td>Perplexity of every dose, edit and control.</td></tr>
+<tr><td><a href="data/part2/cost.json">cost.json</a></td><td>GPU jobs and time.</td></tr>
+</table></div>
+
+<h2>Part 3</h2>
+<div class="table-wrap"><table>
+<tr><th>File</th><th>What</th></tr>
+<tr><td><a href="data/part3/plan.json">plan.json</a></td><td>What is being tested, and Astra's cost for comparison.</td></tr>
+</table></div>
+</main>
+<footer class="site"><div>Third-party data keep their own licences (MATH-500, Hermes, ToolACE, Glaive; MIT CSAIL's logs CC BY 4.0).</div></footer>
+</body>
+</html>

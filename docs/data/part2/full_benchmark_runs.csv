@@ -1,0 +1,15 @@
+arm,seed,test,citations_held,citations_made,practice_held,practice_made,heldout_held,heldout_made,misses_path_wrong,misses_not_found,misses_tool_quote,valid_answers_of_70,checks_1_to_6_all_pass
+base (earlier runs),0,reference,243,284,129,151,114,133,34,6,1,70,False
+base (earlier runs),1,reference,261,299,114,126,147,173,33,4,1,68,False
+base,2,planned,245,279,128,139,117,140,25,5,4,69,False
+base,3,planned,257,284,142,154,115,130,19,4,4,70,True
+target,0,planned,268,284,116,124,152,160,11,1,4,69,False
+target,1,planned,236,254,129,133,107,121,11,6,1,69,False
+control,0,planned,259,286,120,131,139,155,13,10,4,70,True
+control,1,planned,236,271,130,142,106,129,24,6,5,70,False
+base,4,extension,253,279,124,134,129,145,20,1,5,70,True
+base,5,extension,224,250,121,131,103,119,22,3,0,70,False
+target,2,extension,229,247,122,128,107,119,14,0,4,70,True
+target,3,extension,257,278,117,127,140,151,15,2,4,70,True
+control,2,extension,231,267,119,133,112,134,29,3,4,69,False
+control,3,extension,265,297,136,152,129,145,26,2,4,70,False

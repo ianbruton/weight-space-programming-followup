@@ -1,0 +1,80 @@
+{
+ "what": "The released MATH-500 texts re-graded on CPU with our own grader (no generation). authors_*: the 200 first-sample texts in the authors' logs (20 per shard, same problems in both runs). card_*: the 20 texts of the model card's re-run.",
+ "card_base": {
+  "n": 20,
+  "CORRECT": 1,
+  "WRONG": 5,
+  "NO_BOX": 14,
+  "at_cap": 19,
+  "agree_with_authors_flag": 20,
+  "accuracy": 0.05,
+  "at_cap_share": 0.95
+ },
+ "card_edited": {
+  "n": 20,
+  "CORRECT": 10,
+  "WRONG": 3,
+  "NO_BOX": 7,
+  "at_cap": 5,
+  "agree_with_authors_flag": 20,
+  "accuracy": 0.5,
+  "at_cap_share": 0.25
+ },
+ "authors_unedited": {
+  "n": 200,
+  "CORRECT": 15,
+  "WRONG": 24,
+  "NO_BOX": 161,
+  "at_cap": 186,
+  "agree_with_authors_flag": 200,
+  "accuracy": 0.075,
+  "at_cap_share": 0.93,
+  "authors_flags_mean_all_samples": 0.079,
+  "authors_flags_n": 2000,
+  "authors_cut_total": [
+   1860,
+   2000
+  ],
+  "first_samples_with_pred": 35
+ },
+ "authors_p50c": {
+  "n": 200,
+  "CORRECT": 89,
+  "WRONG": 25,
+  "NO_BOX": 86,
+  "at_cap": 70,
+  "agree_with_authors_flag": 197,
+  "accuracy": 0.445,
+  "at_cap_share": 0.35,
+  "authors_flags_mean_all_samples": 0.481,
+  "authors_flags_n": 2000,
+  "authors_cut_total": [
+   661,
+   2000
+  ],
+  "first_samples_with_pred": 303,
+  "disagreements": [
+   {
+    "id": "test/number_theory/864.json",
+    "gold": "52_8",
+    "mine": "WRONG",
+    "authors": 1,
+    "pred": "52"
+   },
+   {
+    "id": "test/number_theory/46.json",
+    "gold": "40_9",
+    "mine": "WRONG",
+    "authors": 1,
+    "pred": "40"
+   },
+   {
+    "id": "test/number_theory/847.json",
+    "gold": "4210_{5}",
+    "mine": "WRONG",
+    "authors": 1,
+    "pred": "4210_5"
+   }
+  ]
+ }
+}

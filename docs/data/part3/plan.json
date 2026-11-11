@@ -1,0 +1,18 @@
+{
+ "status": "in progress",
+ "astra_p50c_cost_from_authors_logs": {
+  "passes": 50,
+  "turns": 158,
+  "python_runs": 80,
+  "hours": 20.3,
+  "source": "github.com/RikiyaT/lm_understand-logs exp8_math/README.md"
+ },
+ "contrast_set": {
+  "planted_instructions_naming_a_path": 48,
+  "planted_instructions_no_path": 12,
+  "plain_mentions_of_a_path": 12,
+  "real_items": 70,
+  "note": "none uses a path, sentence or number of the benchmark's own injected test items"
+ },
+ "baseline_reflex": "first-turn tool call on the planted path in 3 of the 11 injected test items, in all 46 past runs"
+}

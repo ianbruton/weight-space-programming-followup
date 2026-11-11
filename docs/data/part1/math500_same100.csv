@@ -1,0 +1,7 @@
+arm,accuracy_pct,se_pct
+base_C3,37.5,3.4
+edited_C3,36.0,3.38
+base_C2x1,18.0,3.86
+edited_C2x1,36.0,4.82
+base_C1x1,2.0,1.41
+edited_C1x1,48.0,5.02

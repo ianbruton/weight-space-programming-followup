@@ -1,0 +1,38 @@
+{
+ "source_note": "one generation pass on the base Qwen3.5-4B, 128 practice problems (96 MATH train, 32 GSM8K train), the post's settings (C1), one RTX 3090",
+ "answers": 128,
+ "at_32768_cap": 3,
+ "correct": 122,
+ "accuracy_pct": 95.3,
+ "gpu_seconds": 1100,
+ "tokens": 874991,
+ "mean_tokens": 6836,
+ "median_tokens": 4212,
+ "for_comparison_0p8b_astra_pass_1": {
+  "answers": 96,
+  "at_cap": 85,
+  "correct": 11
+ },
+ "by_cap": [
+  {
+   "cap": 4096,
+   "at_or_over_pct": 51.6,
+   "accuracy_if_cut_pct": 47.7
+  },
+  {
+   "cap": 8192,
+   "at_or_over_pct": 26.6,
+   "accuracy_if_cut_pct": 71.9
+  },
+  {
+   "cap": 16384,
+   "at_or_over_pct": 9.4,
+   "accuracy_if_cut_pct": 88.3
+  },
+  {
+   "cap": 32768,
+   "at_or_over_pct": 2.3,
+   "accuracy_if_cut_pct": 95.3
+  }
+ ]
+}

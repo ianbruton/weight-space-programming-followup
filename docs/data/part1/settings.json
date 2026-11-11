@@ -1,0 +1,36 @@
+{
+ "C1": {
+  "name": "the post's",
+  "thinking": true,
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "min_p": 0,
+  "presence_penalty": 1.5,
+  "max_new_tokens": 32768
+ },
+ "C2": {
+  "name": "model card, thinking",
+  "thinking": true,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "top_k": 20,
+  "min_p": 0,
+  "presence_penalty": 1.5,
+  "max_new_tokens": 81920
+ },
+ "C3": {
+  "name": "model card, non-thinking",
+  "thinking": false,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "top_k": 20,
+  "min_p": 0,
+  "presence_penalty": 2.0,
+  "max_new_tokens": 32768
+ },
+ "seed": "sample k of problem i: 1000*i + k, the same for both models",
+ "engine": "vLLM 0.31.0, bf16, prefix caching off, one RTX 3090",
+ "prompt": "problem + newline + 'Please reason step by step, and put your final answer within \\boxed{}.' through the model's chat template",
+ "same100": "C1 and C2 use 1 sample on the first 100 problems of random.Random(0).shuffle of the 500 ids"
+}

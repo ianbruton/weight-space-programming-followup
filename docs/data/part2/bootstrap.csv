@@ -1,0 +1,17 @@
+test,items,difference,points,ci95_low,ci95_high
+planned (2 runs an arm),all 70,target - base,4.5,0.1,9.6
+planned (2 runs an arm),all 70,target - control,4.8,0.7,9.2
+planned (2 runs an arm),all 70,control - base,-0.3,-4.3,3.6
+planned (2 runs an arm),held-out 32,target - base,6.2,-1.0,15.0
+planned (2 runs an arm),held-out 32,target - control,5.9,-0.4,12.8
+planned (2 runs an arm),held-out 32,control - base,0.3,-5.7,5.9
+with extension (4 runs an arm),all 70,target - base,3.5,1.1,6.2
+with extension (4 runs an arm),all 70,target - control,4.7,2.0,8.0
+with extension (4 runs an arm),all 70,control - base,-1.2,-3.6,1.0
+with extension (4 runs an arm),held-out 32,target - base,4.9,1.3,9.5
+with extension (4 runs an arm),held-out 32,target - control,5.5,1.6,10.8
+with extension (4 runs an arm),held-out 32,control - base,-0.6,-4.3,2.6
+extension runs alone (2 an arm),all 70,target - base,2.4,-0.9,6.1
+extension runs alone (2 an arm),all 70,target - control,4.6,0.9,8.5
+extension runs alone (2 an arm),held-out 32,target - base,3.6,-1.7,9.7
+extension runs alone (2 an arm),held-out 32,target - control,5.1,-0.9,12.1
