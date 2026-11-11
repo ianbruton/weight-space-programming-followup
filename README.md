@@ -5,10 +5,14 @@ MIT CSAIL's [Sparks of Weight-Space Programming](https://rikiyat.github.io/blog/
 training, and lifting MATH-500 from 7.9% to 48.1%. This repository holds a follow-up in three parts:
 
 1. **MIT's 0.8B edit, reproduced and compared fairly.** The bytes of the release, the dose of 6, both models under
-   three sampling settings, each at its best, and what the edit costs (perplexity, tool use, an agent task).
+   three sampling settings, compared across settings, and what the edit costs (perplexity, tool use, an agent task).
 2. **Our own 4B citation edit.** The same recipe on Qwen3.5-4B for a different failure, with a random-direction
-   control and statistics reported as planned and as extended.
-3. **A 27B tool-reflex edit.** In progress.
+   control and statistics reported as planned and as extended, then a second round after review.
+3. **A 27B tool-reflex edit.** A negative result: the reflex turned out to be the model's ordinary checking habit,
+   and the edit the recipe found moved the call instead of removing it.
+
+All three parts were reviewed by GPT-6 Astra as a strict reviewer; the corrections are marked on each page.
+Live site: https://ianbruton.github.io/weight-space-programming-followup/
 
 The write-up is a static site in `docs/` (plain HTML and CSS, no build step, no scripts). Open `docs/index.html` in a
 browser, or publish `docs/` with GitHub Pages.
