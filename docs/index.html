@@ -33,13 +33,13 @@ work adds a fair baseline, the costs, and a second model.</p>
     <h3><a href="part1.html">Part 1: MIT's 0.8B edit, reproduced and compared fairly</a></h3>
     <p>The bytes match the release, but the edit applies six times the projection on one direction per layer, and
     it changes 130,188 weights, not 131,072. Under the post's settings the unedited model loops to the token cap. With each
-    model at its own best setting, the edit is ahead by <strong>+10.5 ± 3.8 points</strong>, not +40. It costs 5.5%
+    model at its own best setting, the edit is ahead by <strong>+10 ± 3.6 points</strong>, not +40. It costs 5.5%
     perplexity and some tool use, and in our agent task it mostly stopped looking things up.</p>
   </div>
   <div class="card">
     <h3><a href="part2.html">Part 2: our own 4B citation edit</a></h3>
     <p>The recipe transfers mechanically. One direction in two layers, at the lowest dose, raised the share of
-    citations that hold from 89.7% to 93.1%. A random direction of the same size did nothing. The test we planned
+    citations that hold from 89.7% to 93.1%, and beat a random direction of the same size. The test we planned
     (two runs per arm) came out <strong>"not shown"</strong>. A four-run extension, declared after we had seen that
     result, showed the gain. The edit does not make the model pass the whole benchmark.</p>
   </div>
@@ -56,6 +56,10 @@ work adds a fair baseline, the costs, and a second model.</p>
 Claude Code, under the author's direction. Each decision rule (which edit family, which dose, what counts as
 "it worked") was written down before the test it judged. Where we changed a plan after seeing a result, the pages
 say so.</p>
+<p>Parts 1 and 2 were then reviewed by GPT-6 Astra, the model that found MIT's edit, working as a strict reviewer.
+It found a grading fault of ours (which had understated the edit's thinking-mode gain) and several overstatements.
+The corrections are marked on each page. Astra and Fable now work as a pair on each model size, Astra reviewing and
+proposing, Fable running the experiments.</p>
 <p>Every number on these pages links to a file in <a href="data.html">the data folder</a>. The scripts are in the
 repository's <code>code/</code> folder. Part 1 can be reproduced from public files. Parts 2 and 3 use a private
 benchmark, so we publish the method, the edit directions and the aggregate results, not the benchmark itself.</p>

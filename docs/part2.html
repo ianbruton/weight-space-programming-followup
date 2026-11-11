@@ -18,8 +18,25 @@
 <h1>Part 2: our own 4B citation edit</h1>
 <p class="lede">We used Astra's recipe on Qwen3.5-4B for a failure it really has: citations that point to the wrong
 place. The recipe transferred mechanically. One direction, two layers and the lowest dose raised the share of
-citations that hold by about 3.5 points, and a random direction did nothing. The statistics need careful reading. So
-does what the edit actually is.</p>
+citations that hold by about 3.5 points, and it beat a random direction of the same size. The statistics need careful
+reading. So does what the edit actually is.</p>
+
+<div class="box neutral">
+<p><strong>Reviewed by GPT-6 Astra (11 November).</strong> Astra recomputed every headline figure and re-checked all
+3,276 citations of the twelve fresh runs, and found no discrepancies. Its corrections, now applied on this page:</p>
+<ul>
+  <li>The intervals below resample items, with each arm's runs pooled. They leave out run-to-run variation. Allowing
+  for it as well, Astra's sensitivity check gives edited − base of about <strong>−0.1 to +7.6 points</strong>
+  (held-out −1.4 to +11.9). The gain is likely, not settled.</li>
+  <li>The held-out items were kept out of building the direction, but they did inform some exploratory choices (which
+  token spans to try). They are not an untouched test set.</li>
+  <li>The control is one random edit, repeated over four seeds. The claim is that the edit beat this control, not that
+  any random edit does nothing.</li>
+  <li>That we found no "this citation will miss" direction does not show that none exists.</li>
+</ul>
+<p>A replication with fresh seeds, a second day's data and a tool-calling check is running, together with a round of
+improvements in response to the review.</p>
+</div>
 
 <div class="box">
 <p><strong>In short</strong></p>
@@ -57,7 +74,7 @@ sentence sits in <code>text</code>). The 4B's misses are wrong paths, not badly 
 That gave 32 held-out items and 38 practice items. Directions were built on practice items only.</p>
 
 <h2>Is there a "this citation will miss" direction?</h2>
-<p>No. We read the base model's hidden states over every citation and built difference-of-means directions on
+<p>We found none. We read the base model's hidden states over every citation and built difference-of-means directions on
 practice items. Then we measured how well each separates misses from hits on held-out items (AUC; 0.5 is chance):</p>
 <div class="table-wrap"><table>
 <tr><th>Tokens averaged</th><th class="n">All misses − all held, held-out AUC over layers 1–32</th><th class="n">Pairs inside one answer</th></tr>
@@ -221,8 +238,8 @@ and <a href="data/part2/bootstrap.csv">data/part2/bootstrap.csv</a> (intervals).
 
 <div class="box neutral">
 <p><strong>How we read it.</strong> The citation effect is real and modest: about 3.5 points, a third of the misses.
-It reaches items the direction never saw, and a random direction of the same size does nothing. But the planned test
-did not show it. The evidence for it comes from an extension that we chose after seeing that result. And the edit
+It reaches items the direction was not built from, and it beat a random direction of the same size. But the planned
+test did not show it, and allowing for run-to-run variation its interval touches zero. The evidence for it comes from an extension that we chose after seeing that result. And the edit
 does not make the 4B pass the benchmark reliably.</p>
 </div>
 
@@ -239,7 +256,7 @@ is small: +0.40% perplexity, and six short-answer prompts gave the same answers 
 edit and the control. In the benchmark, answer lengths matched the base except for the answers that never ended.</p>
 
 <h2>What the edit is, and what it is not</h2>
-<p>It is not a "quote exactly" or "be careful" direction. None exists in the 4B's states for this failure. It is a
+<p>It is not a "quote exactly" or "be careful" direction. We found none in the 4B's states for this failure. It is a
 small lexical re-weighting in the last two MLPs (165 columns each, under 1% of each tensor's norm). For a quote of
 the item's sentence, it makes the 4B write paths that hold, most clearly <code>text</code> instead of a bare
 <code>facts</code>. The same direction carries the end-of-answer token. That is why answers stop ending at higher
