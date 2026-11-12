@@ -41,6 +41,8 @@ established.</em> Fable agreed with all fifteen points. The corrections are appl
 </ul>
 <p>What happened next is in <a href="#round2">Round 2</a>: a second day's data, a tool-calling check, and a screen of
 variants with five random controls.</p>
+<p><strong>Re-scored on 12 November:</strong> when the same strict citation resolver scores both arms, the edit's lead
+over the base falls from +3.5 to +0.5 points (−1.1 to +2.5); see <a href="#resolver">Scoring with a resolver</a>.</p>
 </div>
 
 <div class="box">
@@ -56,6 +58,9 @@ variants with five random controls.</p>
   that one layer (31) carries all of it. Higher doses produce answers that never end.</li>
   <li>On a second day's data the edit held no more citations than the base on the 18 items that were new that day
   (−1.2 points). It did not raise tool-calling errors or perplexity.</li>
+  <li>Most of the gain was wrong paths that code can repair: with the same <a href="#resolver">resolver</a> on both
+  arms, edited − base is +0.5 points (−1.1 to +2.5) on the first day and −1.9 (−7.4 to +2.5) on the second, a
+  descriptive reading of reused runs that measures model plus repair, not the model unaided.</li>
 </ul>
 </div>
 
@@ -339,9 +344,9 @@ from.</p>
 items). Counts: <a href="data/part2/round2.json">data/part2/round2.json</a>.</p>
 <ul>
   <li><strong>By the rule: "same direction, not shown".</strong> Against the base the interval includes zero.</li>
-  <li><strong>The gain is not general.</strong> On the 18 items that did not exist on the first day, the edited model
-  held no more citations than the base. All of the gain on unseen items comes from the 22 that were held out on the
-  first day.</li>
+  <li><strong>Transfer to the 18 new items was not demonstrated.</strong> On the 18 items that did not exist on the
+  first day, the edited model held no more citations than the base. All of the gain on unseen items comes from the 22
+  that were held out on the first day.</li>
   <li>The edit still does its narrow thing: wrong-path misses fall from 63 (base) and 56 (control) to 34. But other
   misses rise, so all misses go from 73 (base) to 61, against 84 for the control.</li>
   <li><strong>Tool calling and perplexity, the method of Part 1:</strong> on 900 tool-calling items the edited model
@@ -352,11 +357,117 @@ items). Counts: <a href="data/part2/round2.json">data/part2/round2.json</a>.</p>
 
 <h3>Still running</h3>
 <ul>
-  <li>Four more runs per arm on the first day's data (the replication's first test) were queued, not run, when this
-  page was written.</li>
+  <li>Four more runs per arm on the first day's data (the replication's first test) had not been reported when this
+  page was last updated (12 November).</li>
   <li><strong>The obvious rival, one paragraph in the prompt</strong> that asks the model to match each quote to the
   path it is actually at, is being tested against the edit: base and edited model crossed with the original and the
-  amended prompt, on both days' data. It was queued, not run, when this page was written.</li>
+  amended prompt, in three blocks. <strong>Block 1 of 3 has run</strong> (the first day's 70 items, one run per cell);
+  blocks 2 and 3 have not (block 3 holds the 18 items new on 9 November, which played no part in writing the paragraph). Block 1 is an interim reading and gives no verdict:
+  the paragraph alone held 96.2% of citations, the base 87.0% (+9.2 points, +3.0 to +16.5), the edit alone 92.7%, and
+  edit and paragraph together 93.4%. The next section re-scores these four runs.</li>
+</ul>
+
+<h2 id="resolver">Scoring with a resolver (12 November)</h2>
+<p>Most of what the edit fixed was one kind of miss: the right quote at the wrong path. Code can repair that kind of
+miss after the model has answered. So we asked: if the same repair is applied to the base and to the edited model,
+how much of the edit's lead is left? We re-scored every saved 4B run with a strict resolver. This needed no GPU and
+no new model runs, and the resolver's rules were written down before it existed. Below, 25 October is the first
+day's data and 9 November the second's.</p>
+<p><strong>What a strict resolver does.</strong></p>
+<ul>
+  <li>A citation the checker accepts stays accepted. It never takes a held citation away.</li>
+  <li>A rejected citation of the item is looked for <em>only inside that item</em>, as the model saw it. If the quote
+  stands in exactly one place, the citation is moved there and holds. If it stands in two or more places, it is
+  <em>ambiguous</em> and stays rejected: the resolver does not choose. If it stands nowhere, it stays rejected.</li>
+  <li>A rejected tool citation is looked for only in the tool result its reference names. There is no search across
+  results, and no crossing from a tool result to the item or back.</li>
+</ul>
+<p>Checks: a replay of the checker matched the recorded verdict of every answer in all 36 runs (0 mismatches), and
+the original column below reproduces every published total. GPT-6 Astra replayed all 36 runs (1,858 answers, 6,921
+citations) and reproduced the headline numbers.</p>
+
+<h3>The edit's gain, scored both ways</h3>
+<div class="table-wrap"><table>
+<tr><th>Comparison</th><th class="n">Original checker</th><th class="n">Same resolver on both arms</th><th class="n">Complete answers, original → resolved</th></tr>
+<tr class="hl"><td>25 Oct, edited − base (4 runs an arm, 70 items)</td><td class="n">+3.5 (+1.1 to +6.2)</td><td class="n"><strong>+0.5 (−1.1 to +2.5)</strong></td><td class="n">+7.1 → −1.1 (−5.7 to +3.9)</td></tr>
+<tr><td>25 Oct, edited − control</td><td class="n">+4.7 (+2.0 to +7.9)</td><td class="n">+2.4 (+0.2 to +4.9)</td><td class="n">+9.3 → +1.8 (−2.9 to +6.1)</td></tr>
+<tr class="hl"><td>9 Nov, edited − base (2 runs an arm, 67 items)</td><td class="n">+1.8 (−3.6 to +6.8)</td><td class="n"><strong>−1.9 (−7.4 to +2.5)</strong></td><td class="n">+7.5 → −3.0 (−11.2 to +5.2)</td></tr>
+<tr><td>… new that day, 18</td><td class="n">−1.2 (−11.7 to +8.4)</td><td class="n">−3.0 (−10.8 to +4.7)</td><td class="n">−2.8 → −5.6 (−25.0 to +13.9)</td></tr>
+<tr class="hl"><td>Block 1, prompt paragraph − base (1 run a cell)</td><td class="n">+9.2 (+3.0 to +16.6)</td><td class="n"><strong>+4.6 (−0.8 to +11.4)</strong></td><td class="n">+15.7 → +1.4 (−7.1 to +10.0)</td></tr>
+<tr><td>Block 1, edited − base</td><td class="n">+5.7 (+1.7 to +10.6)</td><td class="n">+2.3 (−1.3 to +7.0)</td><td class="n">+12.9 → +0.0 (−8.6 to +8.6)</td></tr>
+</table></div>
+<p class="src">Share of citations that hold, in points, with 95% intervals (bootstrap over items, 10,000 draws; runs
+not resampled). These intervals are the replay's own, so a few differ by one or two tenths of a point from the tables above.
+<em>Complete answers</em>: valid, citing something, every citation holding (the "clean answers" of Round 2). Data:
+<a href="data/part2/resolver_replay.json">data/part2/resolver_replay.json</a>.</p>
+<p>Per arm, the share that holds goes up everywhere, but more for the base: on 25 October from 89.7% to 95.8% (base),
+93.1% to 96.3% (edited) and 88.4% to 93.9% (control); on 9 November from 86.7% to 93.2%, 88.5% to 91.3% and 84.4% to
+89.4%.</p>
+
+<h3>Why the lead shrinks</h3>
+<p>The base has more mistakes that the resolver can repair: of its rejected citations on 25 October, 67 are a quote
+that stands in exactly one other place in the item, against 34 for the edited model (on 9 November, 36 against 15).
+After the repair the two are left with about as many rejected citations: 46 for the base and 39 for the edited model,
+over four runs each. The edit's gain was mostly in the kind of miss that code can repair, and what the resolver
+leaves is not where the edit helps.</p>
+<div class="table-wrap"><table>
+<tr><th>Arm</th><th class="n">Rejected</th><th class="n">Repaired</th><th class="n">Ambiguous</th><th class="n">Not in item</th><th class="n">Tool misquote</th><th class="n">Tool unmatched</th><th class="n">Empty</th><th class="n">Still rejected</th></tr>
+<tr><td>25 Oct base</td><td class="n">113</td><td class="n">67</td><td class="n">20</td><td class="n">12</td><td class="n">8</td><td class="n">5</td><td class="n">1</td><td class="n">46</td></tr>
+<tr><td>25 Oct edited</td><td class="n">73</td><td class="n">34</td><td class="n">19</td><td class="n">7</td><td class="n">9</td><td class="n">4</td><td class="n">0</td><td class="n">39</td></tr>
+<tr><td>25 Oct control</td><td class="n">130</td><td class="n">62</td><td class="n">36</td><td class="n">15</td><td class="n">6</td><td class="n">11</td><td class="n">0</td><td class="n">68</td></tr>
+<tr><td>9 Nov base</td><td class="n">73</td><td class="n">36</td><td class="n">27</td><td class="n">0</td><td class="n">2</td><td class="n">8</td><td class="n">0</td><td class="n">37</td></tr>
+<tr><td>9 Nov edited</td><td class="n">61</td><td class="n">15</td><td class="n">28</td><td class="n">2</td><td class="n">6</td><td class="n">10</td><td class="n">0</td><td class="n">46</td></tr>
+<tr><td>9 Nov control</td><td class="n">84</td><td class="n">27</td><td class="n">29</td><td class="n">10</td><td class="n">4</td><td class="n">14</td><td class="n">0</td><td class="n">57</td></tr>
+</table></div>
+<p class="src">Citations of the item and of tools, counted over each arm's runs. <em>Tool misquote</em>: the quote is not in the tool result the reference names; <em>tool unmatched</em>: the reference names no result; <em>empty</em>: an empty quote. Corrected after Astra's review (see
+below). Data: <a href="data/part2/resolver_replay.json">data/part2/resolver_replay.json</a>.</p>
+<ul>
+  <li><strong>Ambiguous:</strong> the item states the same words in two or more fields, most often two fields that
+  repeat each other (a short number can also stand inside many longer values), so the strict rule refuses to choose.</li>
+  <li><strong>Quote not in the item:</strong> mostly reformatted quotes (a number quoted together with its field name, list
+  entries joined with commas), and quotes taken from a tool result but labelled as the item's.</li>
+  <li><strong>Tool citations:</strong> real misquotes of a tool result, or references the checker cannot match to
+  any result. No tool citation was repaired in any arm.</li>
+  <li>Against the random control a small edge remains on 25 October (+2.4, +0.2 to +4.9). The control itself falls
+  below the base after the repair (−1.9, −3.7 to +0.1), because it has more misses that cannot be repaired. That is
+  not a gain of the edit over the base.</li>
+</ul>
+
+<h3>Corrections after Astra's review</h3>
+<p>Astra found a fault in the resolver's search and some overstatements. The counts on this page are the corrected
+ones; no score moved.</p>
+<ul>
+  <li>The search stopped early where a field's escaped text hid a match below it. Searching every field moved 31
+  citations from "quote not in the item" to "ambiguous". None of them changed from rejected to held.</li>
+  <li>Held citations that point at a whole list or object instead of a field are about 2% (25 October: 25 of 979
+  for the base, 21 of 990 for the edited model), not the quarter first reported.</li>
+  <li>Tools without a path argument can be cited, by the bare tool name, which the resolver's first report denied.
+  More generally, the checker identifies a tool result by its name and path only, so one held tool citation can
+  cover several different calls (4–6 held citations an arm on 25 October). The resolver keeps every citation the
+  checker accepts, so it inherits this limit.</li>
+</ul>
+
+<h3>What this does and does not show</h3>
+<ul>
+  <li><strong>It is descriptive, on reused data, not a confirmation.</strong> Every run here had been read and used
+  for choices before. These items have now also been inspected under the resolver, so new seeds on the same items
+  would not make an untouched test of a resolver-informed next round.</li>
+  <li><strong>It measures model plus repair, a different task.</strong> It does not erase the edit's gain on
+  producing correct references unaided: the +3.5 points on 25 October stand as an exploratory gain under the
+  original checker.</li>
+  <li>It does not show that the edit has no effect, that the two arms are equivalent, or that the prompt paragraph is
+  better. The paragraph's +4.6 is a point estimate, and its interval crosses zero.</li>
+  <li>The arms produced different citations, so "67 against 34" is a total. It is not evidence that the edit fixed
+  particular mistakes that the base made.</li>
+  <li>The intervals hold the recorded runs fixed. With each arm's runs resampled too (decided after the fact), the
+  resolved edited − base is −2.3 to +4.2 on 25 October and −9.0 to +3.4 on 9 November. Block 1 has one run a cell,
+  so its intervals cannot include run-to-run variation.</li>
+  <li>The resolver checks where a quote stands, not whether it supports the decision. Its corrected rules have not
+  been reviewed again.</li>
+  <li><strong>Not concluded:</strong> whether to drop the citation edit. That waits for blocks 2 and 3 of the prompt
+  test. For practical value, the comparison that matters next is what the edit adds on top of the base with the
+  prompt paragraph and the resolver, on complete answers and on how much is cited, against an effect size fixed in
+  advance.</li>
 </ul>
 
 <h2>Cost, against Astra's</h2>

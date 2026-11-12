@@ -1,0 +1,1704 @@
+{
+ "what": "Part 2, 'Scoring with a resolver': every saved 4B run re-scored by a strict citation resolver (CPU only, no model calls). Tables only, aggregates over items. Descriptive, on development data; not a confirmation.",
+ "measures": {
+  "citations held": "item citations held / cited; same denominator in both columns",
+  "complete answers": "valid answers that cite something and have every citation holding",
+  "intervals": "95%, bootstrap over items (10,000 draws, seed 1), runs not resampled, except the table marked POST HOC, which also resamples each arm's runs"
+ },
+ "resolver": "A citation the checker accepts stays accepted. A rejected citation of the item is searched for only in that item: one node holding the quote resolves it to that path; two or more is ambiguous and stays rejected; none stays rejected. A rejected tool citation is searched for only in the tool result its ref names; no search across results or sources.",
+ "corrected": "2026-11-12, after review: the node search visits every node (31 citations moved from 'not in item' to 'ambiguous', none changed acceptance); container counts count only dicts and lists; tool identity is name plus all arguments. No score moved. These tables are the corrected ones.",
+ "tables": [
+  {
+   "table": "25 Oct, four runs an arm",
+   "rows": [
+    {
+     "arm": "25 Oct base",
+     "runs": "4",
+     "answers": "280",
+     "valid": "279",
+     "cited": "1092",
+     "held original": "979 (89.7%)",
+     "held resolved": "1046 (95.8%)",
+     "complete original": "202 (72.1%)",
+     "complete resolved": "251 (89.6%)"
+    },
+    {
+     "arm": "25 Oct edited",
+     "runs": "4",
+     "answers": "280",
+     "valid": "278",
+     "cited": "1063",
+     "held original": "990 (93.1%)",
+     "held resolved": "1024 (96.3%)",
+     "complete original": "222 (79.3%)",
+     "complete resolved": "248 (88.6%)"
+    },
+    {
+     "arm": "25 Oct control",
+     "runs": "4",
+     "answers": "280",
+     "valid": "279",
+     "cited": "1121",
+     "held original": "991 (88.4%)",
+     "held resolved": "1053 (93.9%)",
+     "complete original": "196 (70.0%)",
+     "complete resolved": "243 (86.8%)"
+    }
+   ]
+  },
+  {
+   "table": "dose screen, 25 Oct practice 24",
+   "rows": [
+    {
+     "arm": "screen base",
+     "runs": "2",
+     "answers": "48",
+     "valid": "47",
+     "cited": "154",
+     "held original": "129 (83.8%)",
+     "held resolved": "141 (91.6%)",
+     "complete original": "30 (62.5%)",
+     "complete resolved": "39 (81.2%)"
+    },
+    {
+     "arm": "screen edited, dose 1",
+     "runs": "1",
+     "answers": "24",
+     "valid": "24",
+     "cited": "74",
+     "held original": "69 (93.2%)",
+     "held resolved": "70 (94.6%)",
+     "complete original": "20 (83.3%)",
+     "complete resolved": "21 (87.5%)"
+    },
+    {
+     "arm": "screen control, dose 1",
+     "runs": "1",
+     "answers": "24",
+     "valid": "24",
+     "cited": "79",
+     "held original": "67 (84.8%)",
+     "held resolved": "74 (93.7%)",
+     "complete original": "15 (62.5%)",
+     "complete resolved": "19 (79.2%)"
+    },
+    {
+     "arm": "screen edited, dose 2",
+     "runs": "1",
+     "answers": "24",
+     "valid": "23",
+     "cited": "75",
+     "held original": "71 (94.7%)",
+     "held resolved": "72 (96.0%)",
+     "complete original": "19 (79.2%)",
+     "complete resolved": "20 (83.3%)"
+    },
+    {
+     "arm": "screen control, dose 2",
+     "runs": "1",
+     "answers": "24",
+     "valid": "23",
+     "cited": "74",
+     "held original": "63 (85.1%)",
+     "held resolved": "70 (94.6%)",
+     "complete original": "16 (66.7%)",
+     "complete resolved": "19 (79.2%)"
+    },
+    {
+     "arm": "screen edited, dose 3",
+     "runs": "1",
+     "answers": "24",
+     "valid": "22",
+     "cited": "65",
+     "held original": "60 (92.3%)",
+     "held resolved": "61 (93.8%)",
+     "complete original": "19 (79.2%)",
+     "complete resolved": "20 (83.3%)"
+    },
+    {
+     "arm": "screen control, dose 3",
+     "runs": "1",
+     "answers": "24",
+     "valid": "24",
+     "cited": "92",
+     "held original": "76 (82.6%)",
+     "held resolved": "86 (93.5%)",
+     "complete original": "13 (54.2%)",
+     "complete resolved": "20 (83.3%)"
+    },
+    {
+     "arm": "screen edited, dose 4",
+     "runs": "1",
+     "answers": "24",
+     "valid": "20",
+     "cited": "64",
+     "held original": "60 (93.8%)",
+     "held resolved": "60 (93.8%)",
+     "complete original": "17 (70.8%)",
+     "complete resolved": "17 (70.8%)"
+    },
+    {
+     "arm": "screen control, dose 4",
+     "runs": "1",
+     "answers": "24",
+     "valid": "24",
+     "cited": "73",
+     "held original": "62 (84.9%)",
+     "held resolved": "68 (93.2%)",
+     "complete original": "15 (62.5%)",
+     "complete resolved": "19 (79.2%)"
+    },
+    {
+     "arm": "screen edited, dose 5",
+     "runs": "1",
+     "answers": "24",
+     "valid": "16",
+     "cited": "46",
+     "held original": "41 (89.1%)",
+     "held resolved": "43 (93.5%)",
+     "complete original": "13 (54.2%)",
+     "complete resolved": "14 (58.3%)"
+    },
+    {
+     "arm": "screen control, dose 5",
+     "runs": "1",
+     "answers": "24",
+     "valid": "24",
+     "cited": "75",
+     "held original": "67 (89.3%)",
+     "held resolved": "73 (97.3%)",
+     "complete original": "16 (66.7%)",
+     "complete resolved": "22 (91.7%)"
+    },
+    {
+     "arm": "screen edited, dose 6",
+     "runs": "1",
+     "answers": "24",
+     "valid": "16",
+     "cited": "40",
+     "held original": "37 (92.5%)",
+     "held resolved": "38 (95.0%)",
+     "complete original": "14 (58.3%)",
+     "complete resolved": "15 (62.5%)"
+    },
+    {
+     "arm": "screen control, dose 6",
+     "runs": "1",
+     "answers": "24",
+     "valid": "23",
+     "cited": "82",
+     "held original": "71 (86.6%)",
+     "held resolved": "75 (91.5%)",
+     "complete original": "15 (62.5%)",
+     "complete resolved": "19 (79.2%)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, two runs an arm",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "runs": "2",
+     "answers": "134",
+     "valid": "134",
+     "cited": "547",
+     "held original": "474 (86.7%)",
+     "held resolved": "510 (93.2%)",
+     "complete original": "87 (64.9%)",
+     "complete resolved": "113 (84.3%)"
+    },
+    {
+     "arm": "9 Nov edited",
+     "runs": "2",
+     "answers": "134",
+     "valid": "133",
+     "cited": "530",
+     "held original": "469 (88.5%)",
+     "held resolved": "484 (91.3%)",
+     "complete original": "97 (72.4%)",
+     "complete resolved": "109 (81.3%)"
+    },
+    {
+     "arm": "9 Nov control",
+     "runs": "2",
+     "answers": "134",
+     "valid": "134",
+     "cited": "539",
+     "held original": "455 (84.4%)",
+     "held resolved": "482 (89.4%)",
+     "complete original": "86 (64.2%)",
+     "complete resolved": "104 (77.6%)"
+    }
+   ]
+  },
+  {
+   "table": "prompt test block 1, 25 Oct, one run a cell",
+   "rows": [
+    {
+     "arm": "block 1 A: base",
+     "runs": "1",
+     "answers": "70",
+     "valid": "70",
+     "cited": "261",
+     "held original": "227 (87.0%)",
+     "held resolved": "244 (93.5%)",
+     "complete original": "48 (68.6%)",
+     "complete resolved": "63 (90.0%)"
+    },
+    {
+     "arm": "block 1 B: base + prompt paragraph",
+     "runs": "1",
+     "answers": "70",
+     "valid": "69",
+     "cited": "261",
+     "held original": "251 (96.2%)",
+     "held resolved": "256 (98.1%)",
+     "complete original": "59 (84.3%)",
+     "complete resolved": "64 (91.4%)"
+    },
+    {
+     "arm": "block 1 C: edited",
+     "runs": "1",
+     "answers": "70",
+     "valid": "69",
+     "cited": "287",
+     "held original": "266 (92.7%)",
+     "held resolved": "275 (95.8%)",
+     "complete original": "57 (81.4%)",
+     "complete resolved": "63 (90.0%)"
+    },
+    {
+     "arm": "block 1 D: edited + prompt paragraph",
+     "runs": "1",
+     "answers": "70",
+     "valid": "70",
+     "cited": "227",
+     "held original": "212 (93.4%)",
+     "held resolved": "219 (96.5%)",
+     "complete original": "59 (84.3%)",
+     "complete resolved": "66 (94.3%)"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, four runs an arm: citation outcomes (counts over the arm's runs)",
+   "rows": [
+    {
+     "arm": "25 Oct base",
+     "cited": "1092",
+     "held": "979",
+     "resolved": "67",
+     "ambiguous": "20",
+     "not in item": "12",
+     "spans the whole item": "0",
+     "not in identified result": "8",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "5",
+     "other: empty quote": "1",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "25",
+     "held tool ref covering several calls": "4",
+     "of which several calls hold the quote": "3"
+    },
+    {
+     "arm": "25 Oct edited",
+     "cited": "1063",
+     "held": "990",
+     "resolved": "34",
+     "ambiguous": "19",
+     "not in item": "7",
+     "spans the whole item": "0",
+     "not in identified result": "9",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "4",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "21",
+     "held tool ref covering several calls": "6",
+     "of which several calls hold the quote": "5"
+    },
+    {
+     "arm": "25 Oct control",
+     "cited": "1121",
+     "held": "991",
+     "resolved": "62",
+     "ambiguous": "36",
+     "not in item": "15",
+     "spans the whole item": "0",
+     "not in identified result": "6",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "11",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "19",
+     "held tool ref covering several calls": "5",
+     "of which several calls hold the quote": "3"
+    }
+   ]
+  },
+  {
+   "table": "dose screen, 25 Oct practice 24: citation outcomes (counts over the arm's runs)",
+   "rows": [
+    {
+     "arm": "screen base",
+     "cited": "154",
+     "held": "129",
+     "resolved": "12",
+     "ambiguous": "10",
+     "not in item": "1",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "2",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "7",
+     "held tool ref covering several calls": "2",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "screen edited, dose 1",
+     "cited": "74",
+     "held": "69",
+     "resolved": "1",
+     "ambiguous": "4",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "3",
+     "of which several calls hold the quote": "3"
+    },
+    {
+     "arm": "screen control, dose 1",
+     "cited": "79",
+     "held": "67",
+     "resolved": "7",
+     "ambiguous": "3",
+     "not in item": "1",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "1",
+     "held tool ref covering several calls": "2",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "screen edited, dose 2",
+     "cited": "75",
+     "held": "71",
+     "resolved": "1",
+     "ambiguous": "1",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "2",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "1",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "screen control, dose 2",
+     "cited": "74",
+     "held": "63",
+     "resolved": "7",
+     "ambiguous": "2",
+     "not in item": "1",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "1",
+     "held tool ref covering several calls": "2",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "screen edited, dose 3",
+     "cited": "65",
+     "held": "60",
+     "resolved": "1",
+     "ambiguous": "4",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "0",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "screen control, dose 3",
+     "cited": "92",
+     "held": "76",
+     "resolved": "10",
+     "ambiguous": "5",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "5",
+     "held tool ref covering several calls": "3",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "screen edited, dose 4",
+     "cited": "64",
+     "held": "60",
+     "resolved": "0",
+     "ambiguous": "1",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "2",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "0",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "screen control, dose 4",
+     "cited": "73",
+     "held": "62",
+     "resolved": "6",
+     "ambiguous": "2",
+     "not in item": "1",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "1",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "1",
+     "held tool ref covering several calls": "3",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "screen edited, dose 5",
+     "cited": "46",
+     "held": "41",
+     "resolved": "2",
+     "ambiguous": "1",
+     "not in item": "1",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "1",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "2",
+     "of which several calls hold the quote": "1"
+    },
+    {
+     "arm": "screen control, dose 5",
+     "cited": "75",
+     "held": "67",
+     "resolved": "6",
+     "ambiguous": "2",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "1",
+     "held tool ref covering several calls": "1",
+     "of which several calls hold the quote": "1"
+    },
+    {
+     "arm": "screen edited, dose 6",
+     "cited": "40",
+     "held": "37",
+     "resolved": "1",
+     "ambiguous": "2",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "0",
+     "held tool ref covering several calls": "3",
+     "of which several calls hold the quote": "1"
+    },
+    {
+     "arm": "screen control, dose 6",
+     "cited": "82",
+     "held": "71",
+     "resolved": "4",
+     "ambiguous": "4",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "2",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "5",
+     "held tool ref covering several calls": "0",
+     "of which several calls hold the quote": "0"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, two runs an arm: citation outcomes (counts over the arm's runs)",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "cited": "547",
+     "held": "474",
+     "resolved": "36",
+     "ambiguous": "27",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "2",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "8",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "4",
+     "held tool ref covering several calls": "0",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "9 Nov edited",
+     "cited": "530",
+     "held": "469",
+     "resolved": "15",
+     "ambiguous": "28",
+     "not in item": "2",
+     "spans the whole item": "0",
+     "not in identified result": "6",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "10",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "9",
+     "held tool ref covering several calls": "4",
+     "of which several calls hold the quote": "4"
+    },
+    {
+     "arm": "9 Nov control",
+     "cited": "539",
+     "held": "455",
+     "resolved": "27",
+     "ambiguous": "29",
+     "not in item": "10",
+     "spans the whole item": "0",
+     "not in identified result": "4",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "14",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "10",
+     "held tool ref covering several calls": "1",
+     "of which several calls hold the quote": "0"
+    }
+   ]
+  },
+  {
+   "table": "prompt test block 1, 25 Oct, one run a cell: citation outcomes (counts over the arm's runs)",
+   "rows": [
+    {
+     "arm": "block 1 A: base",
+     "cited": "261",
+     "held": "227",
+     "resolved": "17",
+     "ambiguous": "13",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "3",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "3",
+     "held tool ref covering several calls": "1",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "block 1 B: base + prompt paragraph",
+     "cited": "261",
+     "held": "251",
+     "resolved": "5",
+     "ambiguous": "4",
+     "not in item": "0",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "1",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "8",
+     "held tool ref covering several calls": "0",
+     "of which several calls hold the quote": "0"
+    },
+    {
+     "arm": "block 1 C: edited",
+     "cited": "287",
+     "held": "266",
+     "resolved": "9",
+     "ambiguous": "8",
+     "not in item": "2",
+     "spans the whole item": "0",
+     "not in identified result": "1",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "1",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "3",
+     "held tool ref covering several calls": "4",
+     "of which several calls hold the quote": "2"
+    },
+    {
+     "arm": "block 1 D: edited + prompt paragraph",
+     "cited": "227",
+     "held": "212",
+     "resolved": "7",
+     "ambiguous": "5",
+     "not in item": "3",
+     "spans the whole item": "0",
+     "not in identified result": "0",
+     "ambiguous ref": "0",
+     "ambiguous call": "0",
+     "unidentified": "0",
+     "other: empty quote": "0",
+     "other: not an object": "0",
+     "other: unknown source": "0",
+     "held with container ref (dict or list)": "9",
+     "held tool ref covering several calls": "2",
+     "of which several calls hold the quote": "1"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, four runs an arm: the unresolved, by source and reason",
+   "rows": [
+    {
+     "arm": "25 Oct base",
+     "item: ambiguous (n nodes: count)": "2: 13, 3: 6, 4: 1",
+     "item ambiguous, one-pick would rescue": "20",
+     "item: not in item, quote in a tool result": "3",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "3 / 1",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "5"
+    },
+    {
+     "arm": "25 Oct edited",
+     "item: ambiguous (n nodes: count)": "2: 15, 3: 3, 5+: 1",
+     "item ambiguous, one-pick would rescue": "19",
+     "item: not in item, quote in a tool result": "3",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "1 / 1",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "4"
+    },
+    {
+     "arm": "25 Oct control",
+     "item: ambiguous (n nodes: count)": "2: 21, 3: 11, 4: 1, 5+: 3",
+     "item ambiguous, one-pick would rescue": "36",
+     "item: not in item, quote in a tool result": "12",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "1 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "11"
+    }
+   ]
+  },
+  {
+   "table": "dose screen, 25 Oct practice 24: the unresolved, by source and reason",
+   "rows": [
+    {
+     "arm": "screen base",
+     "item: ambiguous (n nodes: count)": "2: 10",
+     "item ambiguous, one-pick would rescue": "10",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "2"
+    },
+    {
+     "arm": "screen edited, dose 1",
+     "item: ambiguous (n nodes: count)": "2: 4",
+     "item ambiguous, one-pick would rescue": "4",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen control, dose 1",
+     "item: ambiguous (n nodes: count)": "2: 3",
+     "item ambiguous, one-pick would rescue": "3",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen edited, dose 2",
+     "item: ambiguous (n nodes: count)": "2: 1",
+     "item ambiguous, one-pick would rescue": "1",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 1",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen control, dose 2",
+     "item: ambiguous (n nodes: count)": "2: 1, 5+: 1",
+     "item ambiguous, one-pick would rescue": "2",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen edited, dose 3",
+     "item: ambiguous (n nodes: count)": "2: 4",
+     "item ambiguous, one-pick would rescue": "4",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen control, dose 3",
+     "item: ambiguous (n nodes: count)": "2: 5",
+     "item ambiguous, one-pick would rescue": "5",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen edited, dose 4",
+     "item: ambiguous (n nodes: count)": "2: 1",
+     "item ambiguous, one-pick would rescue": "1",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "2"
+    },
+    {
+     "arm": "screen control, dose 4",
+     "item: ambiguous (n nodes: count)": "2: 2",
+     "item ambiguous, one-pick would rescue": "2",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "1"
+    },
+    {
+     "arm": "screen edited, dose 5",
+     "item: ambiguous (n nodes: count)": "2: 1",
+     "item ambiguous, one-pick would rescue": "1",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "1"
+    },
+    {
+     "arm": "screen control, dose 5",
+     "item: ambiguous (n nodes: count)": "2: 2",
+     "item ambiguous, one-pick would rescue": "2",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen edited, dose 6",
+     "item: ambiguous (n nodes: count)": "2: 2",
+     "item ambiguous, one-pick would rescue": "2",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    },
+    {
+     "arm": "screen control, dose 6",
+     "item: ambiguous (n nodes: count)": "2: 4",
+     "item ambiguous, one-pick would rescue": "4",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "1"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, two runs an arm: the unresolved, by source and reason",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "item: ambiguous (n nodes: count)": "2: 11, 3: 7, 4: 3, 5+: 6",
+     "item ambiguous, one-pick would rescue": "27",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "8"
+    },
+    {
+     "arm": "9 Nov edited",
+     "item: ambiguous (n nodes: count)": "2: 22, 3: 4, 4: 1, 5+: 1",
+     "item ambiguous, one-pick would rescue": "28",
+     "item: not in item, quote in a tool result": "1",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "1 / 1",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "9"
+    },
+    {
+     "arm": "9 Nov control",
+     "item: ambiguous (n nodes: count)": "2: 11, 3: 10, 4: 2, 5+: 6",
+     "item ambiguous, one-pick would rescue": "29",
+     "item: not in item, quote in a tool result": "1",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "13"
+    }
+   ]
+  },
+  {
+   "table": "prompt test block 1, 25 Oct, one run a cell: the unresolved, by source and reason",
+   "rows": [
+    {
+     "arm": "block 1 A: base",
+     "item: ambiguous (n nodes: count)": "2: 5, 3: 6, 4: 2",
+     "item ambiguous, one-pick would rescue": "13",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "1 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "3"
+    },
+    {
+     "arm": "block 1 B: base + prompt paragraph",
+     "item: ambiguous (n nodes: count)": "2: 4",
+     "item ambiguous, one-pick would rescue": "4",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "1"
+    },
+    {
+     "arm": "block 1 C: edited",
+     "item: ambiguous (n nodes: count)": "2: 5, 3: 3",
+     "item ambiguous, one-pick would rescue": "8",
+     "item: not in item, quote in a tool result": "1",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "1 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "1"
+    },
+    {
+     "arm": "block 1 D: edited + prompt paragraph",
+     "item: ambiguous (n nodes: count)": "2: 2, 3: 1, 5+: 2",
+     "item ambiguous, one-pick would rescue": "5",
+     "item: not in item, quote in a tool result": "0",
+     "tool resolved by:": "-",
+     "tool not in identified: quote in another tool result / in item": "0 / 0",
+     "tool ambiguous ref, one named holds it": "0",
+     "tool unidentified: quote elsewhere": "0"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, all (70 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "citations held",
+     "original": "+3.5 (+1.1 to +6.2)",
+     "resolved": "+0.5 (-1.1 to +2.5)",
+     "change (resolved - original)": "-2.9 (-4.7 to -1.4)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "complete answers",
+     "original": "+7.1 (+0.0 to +14.3)",
+     "resolved": "-1.1 (-5.7 to +3.9)",
+     "change (resolved - original)": "-8.2 (-13.9 to -3.2)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "citations held",
+     "original": "+4.7 (+2.0 to +7.9)",
+     "resolved": "+2.4 (+0.2 to +4.9)",
+     "change (resolved - original)": "-2.3 (-4.7 to -0.1)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "complete answers",
+     "original": "+9.3 (+2.1 to +16.8)",
+     "resolved": "+1.8 (-2.9 to +6.1)",
+     "change (resolved - original)": "-7.5 (-13.2 to -1.8)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "citations held",
+     "original": "-1.2 (-3.6 to +0.9)",
+     "resolved": "-1.9 (-3.7 to +0.1)",
+     "change (resolved - original)": "-0.6 (-2.6 to +1.2)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "complete answers",
+     "original": "-2.1 (-7.9 to +2.9)",
+     "resolved": "-2.9 (-7.1 to +1.1)",
+     "change (resolved - original)": "-0.7 (-5.0 to +3.9)"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, practice",
+   "rows": [
+    {
+     "arm": "25 Oct base",
+     "runs": "4",
+     "answers": "152",
+     "valid": "151",
+     "cited": "558",
+     "held original": "515 (92.3%)",
+     "held resolved": "543 (97.3%)",
+     "complete original": "120 (78.9%)",
+     "complete resolved": "141 (92.8%)"
+    },
+    {
+     "arm": "25 Oct edited",
+     "runs": "4",
+     "answers": "152",
+     "valid": "152",
+     "cited": "512",
+     "held original": "484 (94.5%)",
+     "held resolved": "497 (97.1%)",
+     "complete original": "126 (82.9%)",
+     "complete resolved": "138 (90.8%)"
+    },
+    {
+     "arm": "25 Oct control",
+     "runs": "4",
+     "answers": "152",
+     "valid": "151",
+     "cited": "558",
+     "held original": "505 (90.5%)",
+     "held resolved": "537 (96.2%)",
+     "complete original": "111 (73.0%)",
+     "complete resolved": "137 (90.1%)"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, practice (38 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "citations held",
+     "original": "+2.2 (-0.7 to +5.7)",
+     "resolved": "-0.2 (-2.1 to +2.1)",
+     "change (resolved - original)": "-2.5 (-4.9 to -0.3)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "complete answers",
+     "original": "+3.9 (-5.3 to +13.2)",
+     "resolved": "-2.0 (-7.2 to +3.3)",
+     "change (resolved - original)": "-5.9 (-13.2 to +1.3)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "citations held",
+     "original": "+4.0 (+0.5 to +8.3)",
+     "resolved": "+0.8 (-1.1 to +3.1)",
+     "change (resolved - original)": "-3.2 (-6.0 to -0.7)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "complete answers",
+     "original": "+9.9 (+0.0 to +20.4)",
+     "resolved": "+0.7 (-4.6 to +5.9)",
+     "change (resolved - original)": "-9.2 (-17.8 to -1.3)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "citations held",
+     "original": "-1.8 (-5.0 to +1.2)",
+     "resolved": "-1.1 (-3.7 to +1.7)",
+     "change (resolved - original)": "+0.7 (-1.1 to +2.8)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "complete answers",
+     "original": "-5.9 (-13.8 to +2.0)",
+     "resolved": "-2.6 (-8.6 to +2.6)",
+     "change (resolved - original)": "+3.3 (-2.0 to +9.2)"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, held-out",
+   "rows": [
+    {
+     "arm": "25 Oct base",
+     "runs": "4",
+     "answers": "128",
+     "valid": "128",
+     "cited": "534",
+     "held original": "464 (86.9%)",
+     "held resolved": "503 (94.2%)",
+     "complete original": "82 (64.1%)",
+     "complete resolved": "110 (85.9%)"
+    },
+    {
+     "arm": "25 Oct edited",
+     "runs": "4",
+     "answers": "128",
+     "valid": "126",
+     "cited": "551",
+     "held original": "506 (91.8%)",
+     "held resolved": "527 (95.6%)",
+     "complete original": "96 (75.0%)",
+     "complete resolved": "110 (85.9%)"
+    },
+    {
+     "arm": "25 Oct control",
+     "runs": "4",
+     "answers": "128",
+     "valid": "128",
+     "cited": "563",
+     "held original": "486 (86.3%)",
+     "held resolved": "516 (91.7%)",
+     "complete original": "85 (66.4%)",
+     "complete resolved": "106 (82.8%)"
+    }
+   ]
+  },
+  {
+   "table": "25 Oct, held-out (32 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "citations held",
+     "original": "+4.9 (+1.2 to +9.5)",
+     "resolved": "+1.4 (-1.3 to +4.7)",
+     "change (resolved - original)": "-3.5 (-6.2 to -1.5)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "measure": "complete answers",
+     "original": "+10.9 (+0.0 to +22.7)",
+     "resolved": "+0.0 (-8.6 to +8.6)",
+     "change (resolved - original)": "-10.9 (-19.5 to -3.9)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "citations held",
+     "original": "+5.5 (+1.6 to +10.7)",
+     "resolved": "+4.0 (+0.3 to +8.5)",
+     "change (resolved - original)": "-1.5 (-5.3 to +2.1)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "measure": "complete answers",
+     "original": "+8.6 (-1.6 to +18.8)",
+     "resolved": "+3.1 (-4.7 to +10.9)",
+     "change (resolved - original)": "-5.5 (-13.3 to +2.3)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "citations held",
+     "original": "-0.6 (-4.1 to +2.6)",
+     "resolved": "-2.5 (-5.3 to -0.0)",
+     "change (resolved - original)": "-2.0 (-5.3 to +1.1)"
+    },
+    {
+     "comparison": "25 Oct control - 25 Oct base",
+     "measure": "complete answers",
+     "original": "+2.3 (-4.7 to +8.6)",
+     "resolved": "-3.1 (-9.4 to +3.1)",
+     "change (resolved - original)": "-5.5 (-11.7 to +0.8)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, all (67 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "citations held",
+     "original": "+1.8 (-3.6 to +6.8)",
+     "resolved": "-1.9 (-7.4 to +2.5)",
+     "change (resolved - original)": "-3.8 (-6.8 to -1.1)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+7.5 (-2.2 to +16.4)",
+     "resolved": "-3.0 (-11.2 to +5.2)",
+     "change (resolved - original)": "-10.4 (-17.2 to -3.7)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "citations held",
+     "original": "+4.1 (-1.5 to +9.0)",
+     "resolved": "+1.9 (-3.4 to +5.9)",
+     "change (resolved - original)": "-2.2 (-4.3 to -0.0)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "complete answers",
+     "original": "+8.2 (-0.7 to +16.4)",
+     "resolved": "+3.7 (-3.7 to +11.2)",
+     "change (resolved - original)": "-4.5 (-10.4 to +1.5)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "citations held",
+     "original": "-2.2 (-6.1 to +1.6)",
+     "resolved": "-3.8 (-7.3 to -0.8)",
+     "change (resolved - original)": "-1.6 (-3.9 to +0.4)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "complete answers",
+     "original": "-0.7 (-10.4 to +9.0)",
+     "resolved": "-6.7 (-14.9 to +1.5)",
+     "change (resolved - original)": "-6.0 (-11.2 to -0.7)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, not used to build the edit",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "runs": "2",
+     "answers": "80",
+     "valid": "80",
+     "cited": "332",
+     "held original": "281 (84.6%)",
+     "held resolved": "303 (91.3%)",
+     "complete original": "51 (63.7%)",
+     "complete resolved": "66 (82.5%)"
+    },
+    {
+     "arm": "9 Nov edited",
+     "runs": "2",
+     "answers": "80",
+     "valid": "80",
+     "cited": "311",
+     "held original": "276 (88.7%)",
+     "held resolved": "288 (92.6%)",
+     "complete original": "55 (68.8%)",
+     "complete resolved": "65 (81.2%)"
+    },
+    {
+     "arm": "9 Nov control",
+     "runs": "2",
+     "answers": "80",
+     "valid": "80",
+     "cited": "330",
+     "held original": "273 (82.7%)",
+     "held resolved": "293 (88.8%)",
+     "complete original": "47 (58.8%)",
+     "complete resolved": "61 (76.2%)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, not used to build the edit (40 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "citations held",
+     "original": "+4.1 (-2.1 to +9.5)",
+     "resolved": "+1.3 (-3.3 to +5.3)",
+     "change (resolved - original)": "-2.8 (-6.4 to +0.7)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+5.0 (-7.5 to +17.5)",
+     "resolved": "-1.2 (-11.3 to +8.8)",
+     "change (resolved - original)": "-6.2 (-15.0 to +2.5)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "citations held",
+     "original": "+6.0 (+0.3 to +10.9)",
+     "resolved": "+3.8 (+0.1 to +7.1)",
+     "change (resolved - original)": "-2.2 (-5.3 to +1.1)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "complete answers",
+     "original": "+10.0 (-1.3 to +21.3)",
+     "resolved": "+5.0 (-3.7 to +13.7)",
+     "change (resolved - original)": "-5.0 (-15.0 to +3.7)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "citations held",
+     "original": "-1.9 (-6.7 to +2.8)",
+     "resolved": "-2.5 (-5.9 to +0.8)",
+     "change (resolved - original)": "-0.6 (-3.5 to +2.0)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "complete answers",
+     "original": "-5.0 (-18.8 to +8.8)",
+     "resolved": "-6.2 (-17.5 to +5.0)",
+     "change (resolved - original)": "-1.3 (-7.5 to +5.0)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, new on 9 Nov",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "runs": "2",
+     "answers": "36",
+     "valid": "36",
+     "cited": "108",
+     "held original": "93 (86.1%)",
+     "held resolved": "100 (92.6%)",
+     "complete original": "24 (66.7%)",
+     "complete resolved": "29 (80.6%)"
+    },
+    {
+     "arm": "9 Nov edited",
+     "runs": "2",
+     "answers": "36",
+     "valid": "36",
+     "cited": "106",
+     "held original": "90 (84.9%)",
+     "held resolved": "95 (89.6%)",
+     "complete original": "23 (63.9%)",
+     "complete resolved": "27 (75.0%)"
+    },
+    {
+     "arm": "9 Nov control",
+     "runs": "2",
+     "answers": "36",
+     "valid": "36",
+     "cited": "111",
+     "held original": "92 (82.9%)",
+     "held resolved": "100 (90.1%)",
+     "complete original": "19 (52.8%)",
+     "complete resolved": "27 (75.0%)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, new on 9 Nov (18 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "citations held",
+     "original": "-1.2 (-11.7 to +8.4)",
+     "resolved": "-3.0 (-10.8 to +4.7)",
+     "change (resolved - original)": "-1.8 (-7.7 to +4.5)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "complete answers",
+     "original": "-2.8 (-25.0 to +19.4)",
+     "resolved": "-5.6 (-25.0 to +13.9)",
+     "change (resolved - original)": "-2.8 (-13.9 to +8.3)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "citations held",
+     "original": "+2.0 (-6.0 to +8.9)",
+     "resolved": "-0.5 (-4.7 to +3.4)",
+     "change (resolved - original)": "-2.5 (-7.8 to +2.6)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "complete answers",
+     "original": "+11.1 (-8.3 to +30.6)",
+     "resolved": "+0.0 (-13.9 to +13.9)",
+     "change (resolved - original)": "-11.1 (-25.0 to +2.8)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "citations held",
+     "original": "-3.2 (-11.1 to +4.8)",
+     "resolved": "-2.5 (-8.4 to +4.5)",
+     "change (resolved - original)": "+0.7 (-3.4 to +5.3)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "complete answers",
+     "original": "-13.9 (-36.1 to +8.3)",
+     "resolved": "-5.6 (-25.0 to +13.9)",
+     "change (resolved - original)": "+8.3 (+0.0 to +16.7)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, held out on 25 Oct",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "runs": "2",
+     "answers": "44",
+     "valid": "44",
+     "cited": "224",
+     "held original": "188 (83.9%)",
+     "held resolved": "203 (90.6%)",
+     "complete original": "27 (61.4%)",
+     "complete resolved": "37 (84.1%)"
+    },
+    {
+     "arm": "9 Nov edited",
+     "runs": "2",
+     "answers": "44",
+     "valid": "44",
+     "cited": "205",
+     "held original": "186 (90.7%)",
+     "held resolved": "193 (94.1%)",
+     "complete original": "32 (72.7%)",
+     "complete resolved": "38 (86.4%)"
+    },
+    {
+     "arm": "9 Nov control",
+     "runs": "2",
+     "answers": "44",
+     "valid": "44",
+     "cited": "219",
+     "held original": "181 (82.6%)",
+     "held resolved": "193 (88.1%)",
+     "complete original": "28 (63.6%)",
+     "complete resolved": "34 (77.3%)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, held out on 25 Oct (22 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "citations held",
+     "original": "+6.8 (-0.4 to +12.9)",
+     "resolved": "+3.5 (-1.0 to +7.7)",
+     "change (resolved - original)": "-3.3 (-8.0 to +1.0)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+11.4 (-4.5 to +27.3)",
+     "resolved": "+2.3 (-6.8 to +11.4)",
+     "change (resolved - original)": "-9.1 (-20.5 to +2.3)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "citations held",
+     "original": "+8.1 (+0.7 to +14.1)",
+     "resolved": "+6.0 (+1.2 to +9.9)",
+     "change (resolved - original)": "-2.1 (-5.9 to +2.2)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "complete answers",
+     "original": "+9.1 (-4.5 to +22.7)",
+     "resolved": "+9.1 (+0.0 to +20.5)",
+     "change (resolved - original)": "+0.0 (-11.4 to +11.4)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "citations held",
+     "original": "-1.3 (-7.3 to +5.0)",
+     "resolved": "-2.5 (-6.9 to +0.8)",
+     "change (resolved - original)": "-1.2 (-5.4 to +1.7)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+2.3 (-13.6 to +18.2)",
+     "resolved": "-6.8 (-20.5 to +6.8)",
+     "change (resolved - original)": "-9.1 (-18.2 to -2.3)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, used to build the edit",
+   "rows": [
+    {
+     "arm": "9 Nov base",
+     "runs": "2",
+     "answers": "54",
+     "valid": "54",
+     "cited": "215",
+     "held original": "193 (89.8%)",
+     "held resolved": "207 (96.3%)",
+     "complete original": "36 (66.7%)",
+     "complete resolved": "47 (87.0%)"
+    },
+    {
+     "arm": "9 Nov edited",
+     "runs": "2",
+     "answers": "54",
+     "valid": "53",
+     "cited": "219",
+     "held original": "193 (88.1%)",
+     "held resolved": "196 (89.5%)",
+     "complete original": "42 (77.8%)",
+     "complete resolved": "44 (81.5%)"
+    },
+    {
+     "arm": "9 Nov control",
+     "runs": "2",
+     "answers": "54",
+     "valid": "54",
+     "cited": "209",
+     "held original": "182 (87.1%)",
+     "held resolved": "189 (90.4%)",
+     "complete original": "39 (72.2%)",
+     "complete resolved": "43 (79.6%)"
+    }
+   ]
+  },
+  {
+   "table": "9 Nov, used to build the edit (27 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "citations held",
+     "original": "-1.6 (-11.3 to +6.8)",
+     "resolved": "-6.8 (-17.7 to +0.8)",
+     "change (resolved - original)": "-5.1 (-11.0 to -1.1)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+11.1 (-3.7 to +24.1)",
+     "resolved": "-5.6 (-20.4 to +7.4)",
+     "change (resolved - original)": "-16.7 (-27.8 to -7.4)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "citations held",
+     "original": "+1.0 (-9.9 to +11.4)",
+     "resolved": "-0.9 (-12.2 to +7.8)",
+     "change (resolved - original)": "-2.0 (-5.2 to +0.7)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "measure": "complete answers",
+     "original": "+5.6 (-7.4 to +18.5)",
+     "resolved": "+1.9 (-13.0 to +14.8)",
+     "change (resolved - original)": "-3.7 (-11.1 to +3.7)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "citations held",
+     "original": "-2.7 (-9.8 to +3.5)",
+     "resolved": "-5.8 (-13.3 to +0.1)",
+     "change (resolved - original)": "-3.2 (-7.2 to -0.0)"
+    },
+    {
+     "comparison": "9 Nov control - 9 Nov base",
+     "measure": "complete answers",
+     "original": "+5.6 (-7.4 to +20.4)",
+     "resolved": "-7.4 (-18.5 to +5.6)",
+     "change (resolved - original)": "-13.0 (-22.2 to -5.6)"
+    }
+   ]
+  },
+  {
+   "table": "prompt test block 1 (70 items; points, 95% interval over items)",
+   "rows": [
+    {
+     "comparison": "block 1 B: base + prompt paragraph - block 1 A: base",
+     "measure": "citations held",
+     "original": "+9.2 (+3.0 to +16.6)",
+     "resolved": "+4.6 (-0.8 to +11.4)",
+     "change (resolved - original)": "-4.6 (-7.9 to -1.7)"
+    },
+    {
+     "comparison": "block 1 B: base + prompt paragraph - block 1 A: base",
+     "measure": "complete answers",
+     "original": "+15.7 (+4.3 to +28.6)",
+     "resolved": "+1.4 (-7.1 to +10.0)",
+     "change (resolved - original)": "-14.3 (-24.3 to -4.3)"
+    },
+    {
+     "comparison": "block 1 C: edited - block 1 A: base",
+     "measure": "citations held",
+     "original": "+5.7 (+1.7 to +10.6)",
+     "resolved": "+2.3 (-1.3 to +7.0)",
+     "change (resolved - original)": "-3.4 (-5.8 to -1.3)"
+    },
+    {
+     "comparison": "block 1 C: edited - block 1 A: base",
+     "measure": "complete answers",
+     "original": "+12.9 (+4.3 to +22.9)",
+     "resolved": "+0.0 (-8.6 to +8.6)",
+     "change (resolved - original)": "-12.9 (-21.4 to -4.3)"
+    },
+    {
+     "comparison": "block 1 B: base + prompt paragraph - block 1 C: edited",
+     "measure": "citations held",
+     "original": "+3.5 (-1.1 to +8.7)",
+     "resolved": "+2.3 (-1.7 to +7.3)",
+     "change (resolved - original)": "-1.2 (-3.7 to +1.0)"
+    },
+    {
+     "comparison": "block 1 B: base + prompt paragraph - block 1 C: edited",
+     "measure": "complete answers",
+     "original": "+2.9 (-8.6 to +14.3)",
+     "resolved": "+1.4 (-7.1 to +11.4)",
+     "change (resolved - original)": "-1.4 (-10.0 to +7.1)"
+    },
+    {
+     "comparison": "block 1 D: edited + prompt paragraph - block 1 B: base + prompt paragraph",
+     "measure": "citations held",
+     "original": "-2.8 (-6.6 to +1.2)",
+     "resolved": "-1.6 (-5.4 to +2.2)",
+     "change (resolved - original)": "+1.2 (-0.5 to +3.2)"
+    },
+    {
+     "comparison": "block 1 D: edited + prompt paragraph - block 1 B: base + prompt paragraph",
+     "measure": "complete answers",
+     "original": "+0.0 (-8.6 to +8.6)",
+     "resolved": "+2.9 (-5.7 to +11.4)",
+     "change (resolved - original)": "+2.9 (-2.9 to +8.6)"
+    },
+    {
+     "comparison": "block 1 D: edited + prompt paragraph - block 1 C: edited",
+     "measure": "citations held",
+     "original": "+0.7 (-5.1 to +7.1)",
+     "resolved": "+0.7 (-4.6 to +6.8)",
+     "change (resolved - original)": "-0.1 (-2.9 to +2.9)"
+    },
+    {
+     "comparison": "block 1 D: edited + prompt paragraph - block 1 C: edited",
+     "measure": "complete answers",
+     "original": "+2.9 (-10.0 to +15.7)",
+     "resolved": "+4.3 (-4.3 to +14.3)",
+     "change (resolved - original)": "+1.4 (-8.6 to +11.4)"
+    }
+   ]
+  },
+  {
+   "table": "POST HOC: items and runs resampled (10,000 draws, seed 1; not in the rules written first)",
+   "rows": [
+    {
+     "comparison": "25 Oct edited - 25 Oct base",
+     "held original": "+3.5 (-0.0 to +7.5)",
+     "held resolved": "+0.5 (-2.3 to +4.2)",
+     "complete original": "+7.1 (-2.5 to +16.4)",
+     "complete resolved": "-1.1 (-7.9 to +5.4)"
+    },
+    {
+     "comparison": "25 Oct edited - 25 Oct control",
+     "held original": "+4.7 (+0.6 to +9.1)",
+     "held resolved": "+2.4 (-0.5 to +6.1)",
+     "complete original": "+9.3 (-0.7 to +19.3)",
+     "complete resolved": "+1.8 (-5.0 to +8.9)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov base",
+     "held original": "+1.8 (-5.2 to +8.4)",
+     "held resolved": "-1.9 (-9.0 to +3.4)",
+     "complete original": "+7.5 (-4.5 to +19.4)",
+     "complete resolved": "-3.0 (-12.7 to +6.7)"
+    },
+    {
+     "comparison": "9 Nov edited - 9 Nov control",
+     "held original": "+4.1 (-3.1 to +10.4)",
+     "held resolved": "+1.9 (-5.5 to +7.7)",
+     "complete original": "+8.2 (-3.0 to +19.4)",
+     "complete resolved": "+3.7 (-6.0 to +13.4)"
+    }
+   ]
+  }
+ ]
+}
